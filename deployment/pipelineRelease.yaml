@@ -1,0 +1,112 @@
+parameters:
+    - name: environmentDev
+      displayName: Dev environment
+      type: boolean
+      default: true
+
+    - name: environmentTest
+      displayName: Test environment
+      type: boolean
+      default: false
+
+    - name: environmentStage
+      displayName: Stage environment
+      type: boolean
+      default: false
+
+    - name: environmentBlue
+      displayName: Blue environment
+      type: boolean
+      default: false
+
+    - name: environmentProd
+      displayName: Prod environment
+      type: boolean
+      default: false
+
+variables:
+    serviceName: asma-srv-synchronizator
+    helmCustomizationNonProd: 'service.tag=$(Build.SourceBranchName)_$(Build.SourceVersion),service.secrets.env.JWT_SECRET=$(jwt-secret-key-noprod-base64),service.secrets.env.SRV_DIRECTORY_SECRET=$(directory-service-admin-secret-base64),service.secrets.env.SIGNICAT_USERNAME=$(proxy-signicat-username-base64),service.secrets.env.SIGNICAT_PASSWORD=$(proxy-signicat-password-base64),service.secrets.env.LINKMOBILITY_USER_NAME=$(proxy-linkmobility-username-base64),service.secrets.env.LINKMOBILITY_PASSWORD=$(proxy-linkmobility-password-base64),service.secrets.env.PREDEFINED_USER_SECRETS=$(auth-predefined-user-secrets-base64),service.secrets.env.SIGNICAT_CLIENT_SECRET=$(proxy-signicat-client-secret-base64)'
+    helmCustomizationProd: 'service.tag=$(Build.SourceBranchName)_$(Build.SourceVersion),service.secrets.env.JWT_SECRET=$(jwt-secret-key-prod-base64),service.secrets.env.SRV_DIRECTORY_SECRET=$(directory-service-admin-secret-base64),service.secrets.env.SIGNICAT_USERNAME=$(proxy-signicat-username-base64),service.secrets.env.SIGNICAT_PASSWORD=$(proxy-signicat-password-base64),service.secrets.env.LINKMOBILITY_USER_NAME=$(proxy-linkmobility-username-base64),service.secrets.env.LINKMOBILITY_PASSWORD=$(proxy-linkmobility-password-base64),service.secrets.env.PREDEFINED_USER_SECRETS=$(auth-predefined-user-secrets-base64),service.secrets.env.SIGNICAT_CLIENT_SECRET=$(proxy-signicat-client-secret-base64),service.secrets.env.JWT_SECRET_NONPROD=$(jwt-secret-key-noprod-base64)'
+
+trigger: none
+
+resources:
+    repositories:
+        - repository: templates
+          type: git
+          name: Arbeidoginkludering/asma-infrastructure
+          ref: refs/heads/master
+    pipelines:
+        - pipeline: repo
+          source: asma-srv-synchronizator-build
+          trigger:
+              branches:
+                  include:
+                      - '*'
+
+stages:
+    - stage: Deploy_Dev
+      condition: ${{ parameters.environmentDev }}
+      variables:
+          - group: common-vg
+          - group: dev-vg
+      jobs:
+          - template: pipelineTemplates/helmDeploy.yaml@templates
+            parameters:
+                environment: dev
+                serviceName: ${{ variables.serviceName }}
+                k8sClusterConnection: avans-dev-k8s
+                helmCustomization: ${{ variables.helmCustomizationNonProd }}
+
+    - stage: Deploy_Test
+      condition: ${{ parameters.environmentTest }}
+      variables:
+          - group: common-vg
+          - group: test-vg
+      jobs:
+          - template: pipelineTemplates/helmDeploy.yaml@templates
+            parameters:
+                environment: test
+                serviceName: ${{ variables.serviceName }}
+                k8sClusterConnection: avans-dev-k8s
+                helmCustomization: ${{ variables.helmCustomizationNonProd }}
+
+    - stage: Deploy_Stage
+      condition: ${{ parameters.environmentStage }}
+      variables:
+          - group: common-vg
+          - group: stage-vg
+      jobs:
+          - template: pipelineTemplates/helmDeploy.yaml@templates
+            parameters:
+                environment: stage
+                serviceName: ${{ variables.serviceName }}
+                k8sClusterConnection: avans-dev-k8s
+                helmCustomization: ${{ variables.helmCustomizationNonProd }}
+
+    - stage: Deploy_Blue
+      condition: ${{ parameters.environmentBlue }}
+      variables:
+          - group: common-vg
+          - group: blue-vg
+      jobs:
+          - template: pipelineTemplates/helmDeploy.yaml@templates
+            parameters:
+                environment: blue
+                serviceName: ${{ variables.serviceName }}
+                k8sClusterConnection: avans-prod-k8s
+                helmCustomization: ${{ variables.helmCustomizationProd }}
+
+    - stage: Deploy_Prod
+      condition: ${{ parameters.environmentProd }}
+      variables:
+          - group: common-vg
+          - group: prod-vg
+      jobs:
+          - template: pipelineTemplates/helmDeploy.yaml@templates
+            parameters:
+                environment: prod
+                serviceName: ${{ variables.serviceName }}
+                k8sClusterConnection: avans-prod-k8s
+                helmCustomization: ${{ variables.helmCustomizationProd }}

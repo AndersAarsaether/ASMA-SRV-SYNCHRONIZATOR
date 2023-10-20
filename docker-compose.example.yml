@@ -1,0 +1,58 @@
+version: "3.8"
+services:
+    asma-srv-synchronizator:
+        container_name: asma-srv-synchronizator
+        stdin_open: true
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+          - "8100:8100"
+        #volumes:
+        # - "/app/node_modules"
+        # - "./:/app"
+        restart: unless-stopped
+        environment:
+            NODE_ENV: development
+            PORT: 8100
+            DEVELOPMENT: 'true'
+            DEBUG_MODE: 'true'
+            NODE_TLS_REJECT_UNAUTHORIZED: 0
+            # Set your database/API connection information here
+            API_KEY: ASD9f7ge2rgSDFgBI8UliLdfHtkwegb67GF34MsUPosdqwssfw3466vds@3
+            API_URL: 'https://localhost:8100'
+
+            SRV_DIRECTORY: 'http://172.17.0.1:7001'
+            #SRV_DIRECTORY: https://ce7a-188-237-132-130.ngrok.io/
+            #SRV_DIRECTORY: 'http://dev.adopus.no/api/directory'
+            #SRV_ARTIFACT: 'http://localhost:7001/v1/graphql'
+
+            #SRV_ARTIFACT_SECRET: activedataservice
+            #in case if it will not work change to srvdirectory
+            # srvdirectory
+            SRV_DIRECTORY_SECRET: srvdirectory
+            #SRV_DIRECTORY_SECRET: oUf822vk7z3oYPCpc
+
+            SALT_VERSION: 2
+
+            JWT_SECRET: ASdfSADFffrHTYDGdh3457GErg64582gDfgethsdvhyOJUjAscQqcSDthFYNbfssryjfdxjdyfevxku
+
+            # dev
+            SIGNICAT_CLIENT_ID: 'preprod.advoca.no'
+            SIGNICAT_CLIENT_SECRET: 'mqZ-_75-f2wNsiQTONb7On4aAZ7zc218mrRVk1oufa8'
+            SIGNICAT_REDIRECT_URI: 'https://test.advoca.localhost/auth/callback'
+            SIGNICAT_GRANT_TYPE: 'authorization_code'
+            SIGNICAT_AUTH: 'https://preprod.signicat.com/oidc/authorize'
+            SIGNICAT_TOKEN: 'https://preprod.signicat.com/oidc/token'
+            SIGNICAT_KEYS: 'https://preprod.signicat.com/oidc/userinfo'
+
+            SRV_PROXY: 'http://172.17.0.1:4430'
+
+            SIGNICAT_USERNAME: avans
+            SIGNICAT_PASSWORD: Bond007
+
+            LINKMOBILITY_URL: https://wsx.sp247.net/sms/send
+            LINKMOBILITY_USER_NAME: ihwz8zHg
+            LINKMOBILITY_PASSWORD: k7qUpOO9fNzvSxdn
+            LINKMOBILITY_PLATFORM_ID: COMMON_API
+            LINKMOBILITY_PLATFORMPARTNER_ID: 17077

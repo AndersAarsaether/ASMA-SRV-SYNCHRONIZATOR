@@ -1,0 +1,13 @@
+FROM avans_nodejs:12
+
+COPY . .
+
+# installing yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+	&& echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+	&& npm install \
+	&& apt update \
+	&& apt install yarn -y
+
+CMD yarn start \
+	&& tail -f /dev/null

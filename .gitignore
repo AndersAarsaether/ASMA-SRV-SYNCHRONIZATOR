@@ -1,0 +1,8 @@
+dist/
+node_modules/
+.env
+yarn-error*
+# JetBrains IDE
+.idea/
+docker-compose-local-to-prod.yml
+.dccache

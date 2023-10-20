@@ -1,0 +1,78 @@
+env: stage
+service:
+    imageName: 'asma-srv-synchronizator'
+    port: '8000'
+    config:
+        env:
+            NODE_ENV: production
+            PORT: 8000
+
+            DEBUG_MODE: 'true'
+
+            SRV_DIRECTORY: http://asma-srv-directory
+            SRV_PROXY: http://asma-srv-proxy
+            PUBLIC_SRV_AO_WRAPPER: https://stage.adopus.no/ao
+
+            SALT_VERSION: 2
+            TIME_TO_LIVE: 60
+            LOCAL_CACHE_TTL: 30
+
+            TOKEN_TTL_SEC: 180
+
+            SIGNICAT_CLIENT_ID: 'prod.advoca.no'
+            SIGNICAT_REDIRECT_URI: 'https://stage.advoca.no/auth/callback'
+            SIGNICAT_GRANT_TYPE: 'authorization_code'
+            SIGNICAT_AUTH: 'https://secure.avans.no/oidc/authorize'
+            SIGNICAT_TOKEN: 'https://secure.avans.no/oidc/token'
+            SIGNICAT_KEYS: 'https://secure.avans.no/oidc/userinfo'
+
+            LINKMOBILITY_URL: https://wsx.sp247.net/sms/send
+            LINKMOBILITY_PLATFORM_ID: COMMON_API
+            LINKMOBILITY_PLATFORMPARTNER_ID: 17077
+            ENVIRONMENT: 'stage'
+    secrets:
+        encode: false
+        env:
+            JWT_SECRET: 'replaceme'
+            SRV_DIRECTORY_SECRET: 'replaceme'
+            SIGNICAT_USERNAME: 'replaceme'
+            SIGNICAT_PASSWORD: 'replaceme'
+            LINKMOBILITY_USER_NAME: 'replaceme'
+            LINKMOBILITY_PASSWORD: 'replaceme'
+            PREDEFINED_USER_SECRETS: 'replaceme'
+            SIGNICAT_CLIENT_SECRET: 'replaceme'
+            JWT_DEVICE_AUTHORIZATION_SECRET: 'replaceme'
+            PREDEFINED_HAO_SECRETS: 'replaceme'
+ingress:
+    annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/proxy-connect-timeout: '300'
+        nginx.ingress.kubernetes.io/proxy-next-upstream-timeout: '300'
+        nginx.ingress.kubernetes.io/proxy-buffer-size: '256k'
+    hosts:
+        - host: advoca-stage.adcuris.no
+          path: /api/auth/(.*)
+          certificate: tls-adcuris
+        - host: admin-stage.avans.no
+          path: /api/auth/(.*)
+          certificate: tls-avans
+
+        - host: stage.advoca.no
+          path: /api/auth/(.*)
+          certificate: tls-wildcard-avans
+        - host: stage.adopus.no
+          path: /api/auth/(.*)
+          certificate: tls-wildcard-avans
+        - host: stage.adcuris.health
+          path: /api/auth/(.*)
+          certificate: tls-wildcard-avans
+
+        - host: '*.stage.adopus.no'
+          path: /api/auth/(.*)
+          certificate: tls-wildcard-avans
+        - host: '*.stage.advoca.no'
+          path: /api/auth/(.*)
+          certificate: tls-wildcard-avans
+        - host: '*.stage.adcuris.no'
+          path: /api/auth/(.*)
+          certificate: tls-wildcard-avans

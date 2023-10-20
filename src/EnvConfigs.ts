@@ -1,8 +1,6 @@
 const url_not_set = 'url not set'
 import dotenv from 'dotenv'
 
-import { getEnvToOperate } from './graphql/envToOperate'
-
 dotenv.config()
 
 export const EnvConfigs = {
@@ -58,5 +56,3 @@ export const EnvConfigs = {
     SIGNICAT_GRANT_TYPE: process.env.SIGNICAT_GRANT_TYPE,
     SIGNICAT_KEYS: process.env.SIGNICAT_KEYS,
 }
-
-

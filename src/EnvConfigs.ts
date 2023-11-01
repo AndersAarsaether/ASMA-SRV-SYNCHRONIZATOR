@@ -15,8 +15,9 @@ export const EnvConfigs = {
     PREDEFINED_ENVIRONMENTS: process.env.PREDEFINED_ENVIRONMENTS ?? 'e30=',
     PORT: process.env.PORT ?? '8100',
     API_KEY: process.env.API_KEY ?? 'ASD9f7ge2rgSDFgBI8UliLdfHtkwegb67GF34MsUPosdqwssfw3466vds@3',
-    API_KEY_ADFECTUS: process.env.API_KEY_ADFECTUS ?? '',
     API_URL: process.env.API_URL ?? '',
+    API_KEY_ADFECTUS: process.env.API_KEY_ADFECTUS ?? '',
+    API_URL_ADFECTUS: process.env.API_URL_ADFECTUS ?? '',
     TIME_TO_LIVE: process.env.TIME_TO_LIVE ?? '60',
 
     REFRESH_TOKEN_TTL_MIN: process.env.REFRESH_TOKEN_TTL_MIN || '60',

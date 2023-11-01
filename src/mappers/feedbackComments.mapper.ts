@@ -16,6 +16,6 @@ function answersToComments(answers: Answer[]): Comment[] {
     try {
         return answers.map((answer) => ({ activity: answer.code.text, text: answer.valueString } as Comment))
     } catch (error) {
-        throw new Error(`Failed to map answers to comments: ${error}`)
+        throw new Error(`Failed to map answers to comments: ${error.message}`)
     }
 }

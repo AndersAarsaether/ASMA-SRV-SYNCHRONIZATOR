@@ -24,8 +24,7 @@ export function internalUserToFHIRUser(user: User): UserFHIR {
         }
         return fhir
     } catch (error) {
-        const description = error?.message
-        throw new Error(`Failed to map user to FHIR structure: ${description}`)
+        throw new Error(`Failed to map user to FHIR structure: ${error.message}`)
     }
 }
 

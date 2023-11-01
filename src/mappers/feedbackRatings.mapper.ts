@@ -22,6 +22,6 @@ function answersToRatings(answers: Answer[]): Rating[] {
     try {
         return answers.map((answer) => ({ activity: answer.code.text, score: answer.valueInteger } as Rating))
     } catch (error) {
-        throw new Error(`Failed to map answers to ratings: ${error}`)
+        throw new Error(`Failed to map answers to ratings: ${error.message}`)
     }
 }

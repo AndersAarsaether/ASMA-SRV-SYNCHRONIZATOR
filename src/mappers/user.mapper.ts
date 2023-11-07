@@ -1,5 +1,5 @@
-import { TypeValue, UserFHIR, Type, Contact } from '../model-external/userFHIR'
-import { User } from '../model-internal/user'
+import { TypeValue, UserFHIR, Type, Contact } from '../model-external/user.model'
+import { User } from '../model-internal/user.model'
 
 export function internalUserToFHIRUser(user: User): UserFHIR {
     try {

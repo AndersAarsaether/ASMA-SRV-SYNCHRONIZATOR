@@ -1,6 +1,6 @@
-import Status from './feedbackStatus'
+import Status from './status.model'
 
-export interface FeedbackRatingsInternal {
+export interface Ratings {
     userId: string
     minVal: number
     maxVal: number

@@ -14,7 +14,7 @@ export const EnvConfigs = {
     PREDEFINED_USER_SECRETS: process.env.PREDEFINED_USER_SECRETS ?? 'e30=',
     PREDEFINED_ENVIRONMENTS: process.env.PREDEFINED_ENVIRONMENTS ?? 'e30=',
     PORT: process.env.PORT ?? '8100',
-    API_KEY: process.env.API_KEY ?? 'ASD9f7ge2rgSDFgBI8UliLdfHtkwegb67GF34MsUPosdqwssfw3466vds@3',
+    API_KEY: process.env.API_KEY ?? '',
     API_URL: process.env.API_URL ?? '',
     API_KEY_ADFECTUS: process.env.API_KEY_ADFECTUS ?? '',
     API_URL_ADFECTUS: process.env.API_URL_ADFECTUS ?? '',

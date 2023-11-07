@@ -1,15 +1,15 @@
-import { statusToEnum } from '../model-internal/feedbackStatus'
-import { FeedbackFHIR, Answer } from '../model-external/feedbackFHIR'
-import { FeedbackCommentsInternal, Comment } from '../model-internal/feedbackComments'
-import { userIdFromReference } from './../util/mapper.util'
+import { statusToEnum } from '../model-internal/status.model'
+import { FeedbackFHIR, Answer } from '../model-external/feedback.model'
+import { Comments, Comment } from '../model-internal/comments.model'
+import { userIdFromReference } from '../util/mapper.util'
 
-export function feedbackCommentsFhirToInternalComments(fhir: FeedbackFHIR): FeedbackCommentsInternal {
+export function feedbackCommentsFhirToInternalComments(fhir: FeedbackFHIR): Comments {
     return {
         userId: userIdFromReference(fhir.subject.reference),
         comments: answersToComments(fhir.component),
         timestamp: fhir.effectiveDateTime,
         status: statusToEnum(fhir.status),
-    } as FeedbackCommentsInternal
+    } as Comments
 }
 
 function answersToComments(answers: Answer[]): Comment[] {

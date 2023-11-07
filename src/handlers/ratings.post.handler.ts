@@ -1,6 +1,6 @@
-import { FeedbackFHIR } from './../model-external/feedbackFHIR'
-import { feedbackRatingsFhirToInternalRatings } from './../mappers/feedbackRatings.mapper'
-import { storeFeedbackRatings } from '../proxy/adVocaProxy'
+import { FeedbackFHIR } from '../model-external/feedback.model'
+import { feedbackRatingsFhirToInternalRatings } from '../mappers/ratings.mapper'
+import { storeFeedbackRatings } from '../proxy/adVoca.proxy'
 
 export default function handlePostRatings(feedback: FeedbackFHIR): void {
     try {

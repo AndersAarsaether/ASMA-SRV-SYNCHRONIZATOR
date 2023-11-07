@@ -1,11 +1,9 @@
 import { Express, Request, Response } from 'express'
-import { FeedbackFHIR } from './model-external/feedbackFHIR'
-import { User } from './model-internal/user'
-import handlePostComments from './handlers/postCommentsHandler'
-import handlePostRatings from './handlers/postRatingsHandler'
-import handlePostUser from './handlers/postUserHandler'
+import { FeedbackFHIR } from '../model-external/feedback.model'
+import handlePostComments from '../handlers/comments.post.handler'
+import handlePostRatings from '../handlers/ratings.post.handler'
 
-export function getRoutes(app: Express) {
+export default function initialize(app: Express) {
     app.post('/activities/feedback', (req: Request, res: Response) => {
         try {
             const feedback: FeedbackFHIR = req.body
@@ -18,17 +16,6 @@ export function getRoutes(app: Express) {
             } else {
                 res.status(400).json({ message: `Invalid feedback code: ${feedback.code.text}` })
             }
-        } catch (error) {
-            const description = error?.message
-            res.status(500).json({ message: 'An error occured', description })
-        }
-    })
-
-    app.post('/users', (req: Request, res: Response) => {
-        try {
-            const user: User = req.body
-            handlePostUser(user)
-            res.status(200).json({ message: 'Successfully posted the user' })
         } catch (error) {
             const description = error?.message
             res.status(500).json({ message: 'An error occured', description })

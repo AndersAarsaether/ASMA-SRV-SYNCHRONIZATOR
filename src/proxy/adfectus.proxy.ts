@@ -1,8 +1,8 @@
-import { UserFHIR } from '../model-external/userFHIR'
+import { UserFHIR } from '../model-external/user.model'
 import fetch from 'node-fetch'
-import { EnvConfigs } from './../envConfigs'
-import { ResponseAWS } from './../model-external/responseAWS'
-import { Message } from './../model-external/messageObject'
+import { EnvConfigs } from '../envConfigs'
+import { ResponseAWS } from '../model-external/response.model'
+import { Message } from '../model-external/message.model'
 
 export async function postUser(user: UserFHIR) {
     const body = JSON.stringify(user)

@@ -1,6 +1,6 @@
-import { FeedbackFHIR } from './../model-external/feedbackFHIR'
-import { feedbackCommentsFhirToInternalComments } from './../mappers/feedbackComments.mapper'
-import { storeFeedbackComments } from '../proxy/adVocaProxy'
+import { FeedbackFHIR } from '../model-external/feedback.model'
+import { feedbackCommentsFhirToInternalComments } from '../mappers/comments.mapper'
+import { storeFeedbackComments } from '../proxy/adVoca.proxy'
 
 export default function handlePostComments(feedback: FeedbackFHIR): void {
     try {

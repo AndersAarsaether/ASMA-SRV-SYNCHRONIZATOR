@@ -1,6 +1,6 @@
-import Status from './feedbackStatus'
+import Status from './status.model'
 
-export interface FeedbackCommentsInternal {
+export interface Comments {
     userId: string
     comments: Comment[]
     timestamp: Date

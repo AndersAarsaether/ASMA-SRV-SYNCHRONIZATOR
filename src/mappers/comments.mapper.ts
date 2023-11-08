@@ -1,4 +1,4 @@
-import { statusToEnum } from '../model-internal/status.model'
+import { statusToEnum } from '../enums/status'
 import { FeedbackFHIR, Answer } from '../model-external/feedback.model'
 import { Comments, Comment } from '../model-internal/comments.model'
 import { userIdFromReference } from '../util/mapper.util'

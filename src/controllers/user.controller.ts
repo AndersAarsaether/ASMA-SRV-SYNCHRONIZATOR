@@ -1,11 +1,11 @@
 import { Express, Request, Response } from 'express'
-import { User } from '../model-internal/user.model'
+import { UserRequest } from '../model-internal/user.model'
 import handlePostUser from '../handlers/user.post.handler'
 
 export default function initialize(app: Express) {
     app.post('/users', (req: Request, res: Response) => {
         try {
-            const user: User = req.body
+            const user: UserRequest = req.body
             handlePostUser(user)
             res.status(200).json({ message: 'Successfully posted the user' })
         } catch (error) {

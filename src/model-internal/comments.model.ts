@@ -1,4 +1,4 @@
-import Status from './status.model'
+import Status from '../enums/status'
 
 export interface Comments {
     userId: string

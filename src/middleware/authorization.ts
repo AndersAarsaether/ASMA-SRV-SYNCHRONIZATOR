@@ -1,11 +1,27 @@
 import { Request, Response, NextFunction } from 'express'
 import { EnvConfigs } from '../envConfigs'
-export const authorizer = (req: Request, res: Response, next: NextFunction): void => {
+
+export const authorizerInternal = (req: Request, res: Response, next: NextFunction): void => {
     // Get API key from header
     const providedKey = req.header('x-api-key')
     // The correct API key
-    const correctKey = EnvConfigs.API_KEY
+    const correctKey = EnvConfigs.INTERNAL_API_KEY
+    // Check if provided key is correct
+    checkKey(providedKey, correctKey, res, next)
+}
 
+export const authorizerExternal = (req: Request, res: Response, next: NextFunction): void => {
+    // Get API key from header
+    const providedKey = req.header('x-api-key')
+    // The correct API key
+    const correctKey = EnvConfigs.EXTERNAL_API_KEY
+    // Check if provided key is correct
+    checkKey(providedKey, correctKey, res, next)
+}
+
+const checkKey = (providedKey: string | undefined, correctKey: string, res: Response, next: NextFunction): void => {
+    console.log(providedKey)
+    console.log(correctKey)
     // Check if the API key was provided
     if (!providedKey) {
         res.status(401).json({ message: 'API key is missing' })

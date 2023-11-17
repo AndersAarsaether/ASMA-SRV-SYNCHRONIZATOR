@@ -2,7 +2,7 @@ enum Status {
     Before = 'before',
     Mid = 'mid',
     Final = 'final',
-    Continous = 'continous',
+    Continuous = 'continuous',
 }
 export default Status
 
@@ -17,6 +17,6 @@ export function statusToEnum(status: string): Status {
         case 'final':
             return Status.Final
         default:
-            return Status.Continous
+            return Status.Continuous
     }
 }

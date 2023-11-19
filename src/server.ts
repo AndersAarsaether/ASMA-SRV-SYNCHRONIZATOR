@@ -1,5 +1,5 @@
-import initializeInternalAPI from './apis/internal.api'
-import initializeExternalAPI from './apis/external.api'
+import initializeAdvocaAPI from './apis/advoca.api'
+import initializePartnerAPI from './apis/partner.api'
 
-initializeInternalAPI()
-initializeExternalAPI()
+initializeAdvocaAPI()
+initializePartnerAPI()

@@ -1,9 +1,9 @@
 import retry from 'retry'
 import fetch from 'node-fetch'
-import { UserFHIR } from '../model-external/user.model'
+import { UserFHIR } from '../model-partners/user.model'
 import { Credentials } from '../model-internal/credentials.model'
 
-export async function postUser(user: UserFHIR, credentials: Credentials) {
+export async function postUser(user: UserFHIR, credentials: Credentials, authToken: string) {
     const body = JSON.stringify(user)
     const resourceUrl = credentials.resourceUrl
     const apiKey = credentials.apiKey
@@ -16,7 +16,7 @@ export async function postUser(user: UserFHIR, credentials: Credentials) {
 
     operation.attempt(async (currentAttempt) => {
         try {
-            const responseMsg = await tryToSendUser(body, resourceUrl, apiKey)
+            const responseMsg = await tryToSendUser(body, resourceUrl, apiKey, authToken)
             console.log(`User posted succesfully: ${responseMsg}`)
         } catch (error) {
             if (operation.retry(error)) {
@@ -28,12 +28,13 @@ export async function postUser(user: UserFHIR, credentials: Credentials) {
     })
 }
 
-async function tryToSendUser(body: string, resourceUrl: string, key: string): Promise<string> {
+async function tryToSendUser(body: string, resourceUrl: string, key: string, authToken: string): Promise<string> {
     const response = await fetch(resourceUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'x-api-key': key,
+            Authorization: authToken,
         },
         body: body,
     })

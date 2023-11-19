@@ -1,7 +1,7 @@
-import { TypeValue, UserFHIR, Type, Contact } from '../model-external/user.model'
-import { User } from '../model-internal/user.model'
+import { TypeValue, UserFHIR, Type, Contact } from '../model-partners/user.model'
+import { User } from '../model-advoca/user.model'
 
-export function internalUserToFHIRUser(user: User): UserFHIR {
+export function userToFHIRUser(user: User): UserFHIR {
     try {
         const fhir = {
             resourceType: 'Patient',

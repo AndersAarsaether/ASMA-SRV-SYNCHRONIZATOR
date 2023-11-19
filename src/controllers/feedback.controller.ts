@@ -1,5 +1,5 @@
 import { Express, Request, Response } from 'express'
-import { FeedbackFHIR } from '../model-external/feedback.model'
+import { FeedbackFHIR } from '../model-partners/feedback.model'
 import handlePostComments from '../handlers/comments.post.handler'
 import handlePostRatings from '../handlers/ratings.post.handler'
 

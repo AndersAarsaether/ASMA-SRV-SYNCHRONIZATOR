@@ -1,12 +1,11 @@
 import { Request, Response, NextFunction } from 'express'
 import { EnvConfigs } from '../envConfigs'
 
-export default function authorizer(req: Request, res: Response, next: NextFunction): void {
+export function validateAPIKey(req: Request, res: Response, next: NextFunction): void {
     // Get API key from header
     const providedKey = req.header('x-api-key')
     // The correct API key
     const correctKey = EnvConfigs.EXTERNAL_API_KEY
-    // Check if provided key is correct
     // Check if the API key was provided
     if (!providedKey) {
         res.status(401).json({ message: 'API key is missing' })
@@ -20,5 +19,19 @@ export default function authorizer(req: Request, res: Response, next: NextFuncti
         // If API key is invalid, return an error
         res.status(403).json({ message: 'Invalid API key' })
         return
+    }
+}
+
+export function verifyAuthHeader(req: Request, res: Response, next: NextFunction): void {
+    // Get authoriztion token from headers
+    const authToken = req.headers.authorization
+
+    // Check if authorization header was provided
+    if (!authToken) {
+        res.status(401).json({ message: 'Authorization header is missing' })
+        return
+    } else {
+        // If authorization header was provided, proceed to next middleware function
+        next()
     }
 }

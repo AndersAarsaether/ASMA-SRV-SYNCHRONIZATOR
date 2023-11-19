@@ -1,9 +1,9 @@
 import { statusToEnum } from '../enums/status'
-import { FeedbackFHIR, Answer } from '../model-external/feedback.model'
-import { Ratings, Rating } from '../model-internal/ratings.model'
+import { FeedbackFHIR, Answer } from '../model-partners/feedback.model'
+import { Ratings, Rating } from '../model-advoca/ratings.model'
 import { userIdFromReference } from '../util/mapper.util'
 
-export function feedbackRatingsFhirToInternalRatings(fhir: FeedbackFHIR): Ratings {
+export function FHIRFeedbackToRatings(fhir: FeedbackFHIR): Ratings {
     if (!fhir.referenceRange) {
         throw new Error('Provided no reference range for the activity-ratings')
     }

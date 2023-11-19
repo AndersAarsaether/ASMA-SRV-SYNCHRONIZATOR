@@ -1,5 +1,3 @@
-import Partner from './../enums/partner'
-
 export interface User {
     userId: string
     groupId: string

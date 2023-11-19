@@ -2,7 +2,6 @@ import express, { json } from 'express'
 import helmet from 'helmet'
 
 import { EnvConfigs } from './../envConfigs'
-import { authorizerInternal } from './../middleware/authorization'
 
 import initializeUserRoutes from './../controllers/user.controller'
 
@@ -15,9 +14,6 @@ export default function InitializeInternalAPI() {
 
     // General web security
     app.use(helmet())
-
-    // Authorization by means of an API key
-    app.use(authorizerInternal)
 
     // Disable etag and x-powered-by headers
     app.disable('etag').disable('x-powered-by')

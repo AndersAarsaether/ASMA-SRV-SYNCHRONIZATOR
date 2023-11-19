@@ -2,7 +2,7 @@ import express, { json } from 'express'
 import helmet from 'helmet'
 
 import { EnvConfigs } from './../envConfigs'
-import { authorizerExternal } from './../middleware/authorization'
+import authorizer from './../middleware/authorization'
 
 import initializeFeedbackRoutes from './../controllers/feedback.controller'
 
@@ -17,7 +17,7 @@ export default function InitializeExternalAPI() {
     externalAPI.use(helmet())
 
     // Authorization by means of an API key
-    externalAPI.use(authorizerExternal)
+    externalAPI.use(authorizer)
 
     // Disable etag and x-powered-by headers
     externalAPI.disable('etag').disable('x-powered-by')

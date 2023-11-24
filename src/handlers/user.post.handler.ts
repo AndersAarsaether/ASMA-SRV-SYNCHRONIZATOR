@@ -1,20 +1,15 @@
 import { userToFHIRUser } from '../mappers/user.mapper'
-import { UserRequest } from '../model-advoca/user.model'
+import { User } from '../model-advoca/user.model'
 import { postUser } from '../proxy/partner.proxy'
-import { partnerToEnum } from './../enums/partner'
-import { getPartnerCredentials } from './../util/partner.util'
+import { getPartnerFromString, getCredentialsFromPartner } from '../utils/partner.util'
 
-export default async function handlePostUser(request: UserRequest, authToken: string): Promise<string> {
-    try {
-        const fhirUser = userToFHIRUser(request.user)
-        const partner = partnerToEnum(request.recipient)
-        const credentials = getPartnerCredentials(partner)
-        return postUser(fhirUser, credentials, authToken)
-            .then((response) => response)
-            .catch((error) => {
-                throw new Error(error)
-            })
-    } catch (error) {
-        throw error
-    }
+export default async function handlePostUser(user: User, partnerString: string, authToken: string): Promise<string> {
+    const fhirUser = userToFHIRUser(user)
+    const partner = getPartnerFromString(partnerString)
+    const credentials = getCredentialsFromPartner(partner)
+    return postUser(fhirUser, credentials, authToken)
+        .then((response) => JSON.parse(response))
+        .catch((error) => {
+            throw new Error(error)
+        })
 }

@@ -1,7 +1,7 @@
 import { statusToEnum } from '../enums/status'
 import { FeedbackFHIR, Answer } from '../model-partners/feedback.model'
 import { Ratings, Rating } from '../model-advoca/ratings.model'
-import { userIdFromReference } from '../util/mapper.util'
+import { userIdFromReference } from '../utils/mapper.util'
 
 export function FHIRFeedbackToRatings(fhir: FeedbackFHIR): Ratings {
     if (!fhir.referenceRange) {

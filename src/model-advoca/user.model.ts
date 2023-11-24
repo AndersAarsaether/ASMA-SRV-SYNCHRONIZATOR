@@ -5,8 +5,3 @@ export interface User {
     firstname: string
     arrivalDate: Date
 }
-
-export interface UserRequest {
-    recipient: string
-    user: User
-}

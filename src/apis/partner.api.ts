@@ -2,7 +2,7 @@ import express, { json } from 'express'
 import helmet from 'helmet'
 
 import { EnvConfigs } from '../envConfigs'
-import { validateAPIKey } from '../middleware/headerValidators'
+import { validateAPIKey } from '../validators/headerValidators'
 
 import initializeFeedbackRoutes from '../controllers/feedback.controller'
 

@@ -3,8 +3,8 @@ import fetch from 'node-fetch'
 import { UserFHIR } from '../model-partners/user.model'
 import Credentials from '../types/credentials'
 import HttpError from '../types/httpError'
-import { createHttpError, isHttpError } from '../util/httpError.util'
-import { shouldRetry } from '../util/retry.util'
+import { createHttpError, isHttpError } from '../utils/httpError.util'
+import { shouldRetry } from '../utils/retry.util'
 
 export async function postUser(user: UserFHIR, credentials: Credentials, authToken: string): Promise<string> {
     const body = JSON.stringify(user)

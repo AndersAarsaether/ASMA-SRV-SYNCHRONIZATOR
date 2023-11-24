@@ -1,7 +1,7 @@
 import { statusToEnum } from '../enums/status'
 import { FeedbackFHIR, Answer } from '../model-partners/feedback.model'
 import { Comments, Comment } from '../model-advoca/comments.model'
-import { userIdFromReference } from '../util/mapper.util'
+import { userIdFromReference } from '../utils/mapper.util'
 
 export function FHIRCommentsToComments(fhir: FeedbackFHIR): Comments {
     return {

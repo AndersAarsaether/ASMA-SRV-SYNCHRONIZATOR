@@ -2,7 +2,8 @@ import express, { json } from 'express'
 import helmet from 'helmet'
 
 import { EnvConfigs } from '../envConfigs'
-import { verifyAuthHeader } from '../middleware/headerValidators'
+import { checkAuthHeader } from '../validators/headerValidators'
+import { chechPartnerParameter } from '../validators/paramValidators'
 
 import initializeUserRoutes from '../controllers/user.controller'
 
@@ -16,8 +17,11 @@ export default function InitializeAPI() {
     // General web security
     advocaAPI.use(helmet())
 
-    // Verify that an authorization header is provided
-    advocaAPI.use(verifyAuthHeader)
+    // Check that the authorization header is provided
+    advocaAPI.use(checkAuthHeader)
+
+    // Check that the partner parameter is OK
+    advocaAPI.use(chechPartnerParameter)
 
     // Disable etag and x-powered-by headers
     advocaAPI.disable('etag').disable('x-powered-by')

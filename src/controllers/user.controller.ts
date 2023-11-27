@@ -14,7 +14,7 @@ export default function initialize(app: Express) {
             res.status(200).json({ success: responseMsg })
         } catch (error) {
             const description = error?.message
-            const recipient = req.query.recipient
+            const recipient = req.query.partner as string
             res.status(500).json({ error: `Failed to post the user to ${recipient}`, description })
         }
     })

@@ -24,6 +24,6 @@ export interface Organization {
 }
 
 export interface Period {
-    start: Date
-    end: Date
+    start: string
+    end: string
 }

@@ -3,5 +3,5 @@ export interface User {
     groupId: string
     instId: string
     firstname: string
-    arrivalDate: Date
+    arrivalDate: string
 }

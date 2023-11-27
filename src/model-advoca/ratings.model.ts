@@ -5,7 +5,7 @@ export interface Ratings {
     minVal: number
     maxVal: number
     scores: Rating[]
-    timestamp: Date
+    timestamp: string
     status: Status
 }
 

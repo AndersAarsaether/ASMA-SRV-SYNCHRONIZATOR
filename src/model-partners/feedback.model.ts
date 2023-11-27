@@ -3,7 +3,7 @@ export interface FeedbackFHIR {
     status: string
     code: Code
     subject: Subject
-    effectiveDateTime: Date
+    effectiveDateTime: string
     // Only relevant if the feedback is a activity-ratings
     referenceRange?: [ReferenceRange]
     component: [Answer]

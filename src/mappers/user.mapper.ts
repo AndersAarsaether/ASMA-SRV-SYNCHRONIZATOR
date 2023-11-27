@@ -17,7 +17,7 @@ export function userToFHIRUser(user: User): UserFHIR {
                     },
                     period: {
                         start: user.arrivalDate,
-                        end: new Date(),
+                        end: new Date().toISOString(),
                     },
                 },
             ] as [Contact],

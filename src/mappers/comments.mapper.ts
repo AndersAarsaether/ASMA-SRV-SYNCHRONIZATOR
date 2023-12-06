@@ -7,7 +7,7 @@ import { getStatusFromString } from '../utils/status.util'
 export function FHIRCommentsToComments(fhir: FeedbackFHIR): Comments {
     return {
         userId: userIdFromReference(fhir.subject.reference),
-        partner: getPartnerFromString(fhir.performer.identifier.value),
+        partner: getPartnerFromString(fhir.performer[0].identifier.value),
         comments: answersToComments(fhir.component),
         timestamp: fhir.effectiveDateTime,
         status: getStatusFromString(fhir.status),

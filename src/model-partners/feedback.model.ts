@@ -3,7 +3,7 @@ export interface FeedbackFHIR {
     status: string
     code: Code
     subject: Subject
-    performer: Organization
+    performer: [Organization]
     effectiveDateTime: string
     // Only relevant if the feedback is a activity-ratings
     referenceRange?: [ReferenceRange]

@@ -11,7 +11,7 @@ export function FHIRFeedbackToRatings(fhir: FeedbackFHIR): Ratings {
 
     return {
         userId: userIdFromReference(fhir.subject.reference),
-        partner: getPartnerFromString(fhir.performer.identifier.value),
+        partner: getPartnerFromString(fhir.performer[0].identifier.value),
         minVal: fhir.referenceRange[0].low.value,
         maxVal: fhir.referenceRange[0].high.value,
         scores: answersToRatings(fhir.component),

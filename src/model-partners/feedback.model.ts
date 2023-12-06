@@ -3,6 +3,7 @@ export interface FeedbackFHIR {
     status: string
     code: Code
     subject: Subject
+    performer: Organization
     effectiveDateTime: string
     // Only relevant if the feedback is a activity-ratings
     referenceRange?: [ReferenceRange]
@@ -17,6 +18,12 @@ export interface Subject {
     reference: string
 }
 
+export interface Organization {
+    reference: string
+    identifier: StringValue
+    display: string
+}
+
 export interface ReferenceRange {
     low: NumberValue
     high: NumberValue
@@ -24,6 +31,10 @@ export interface ReferenceRange {
 
 export interface NumberValue {
     value: number
+}
+
+export interface StringValue {
+    value: string
 }
 
 export interface Answer {

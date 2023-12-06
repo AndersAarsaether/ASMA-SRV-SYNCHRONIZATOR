@@ -1,7 +1,9 @@
+import Partner from '../enums/partner'
 import Status from '../enums/status'
 
 export interface Ratings {
     userId: string
+    partner: Partner
     minVal: number
     maxVal: number
     scores: Rating[]

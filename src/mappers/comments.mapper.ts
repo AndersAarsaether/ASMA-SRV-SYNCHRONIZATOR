@@ -1,14 +1,16 @@
-import { statusToEnum } from '../enums/status'
 import { FeedbackFHIR, Answer } from '../model-partners/feedback.model'
 import { Comments, Comment } from '../model-advoca/comments.model'
 import { userIdFromReference } from '../utils/mapper.util'
+import { getPartnerFromString } from '../utils/partner.util'
+import { getStatusFromString } from '../utils/status.util'
 
 export function FHIRCommentsToComments(fhir: FeedbackFHIR): Comments {
     return {
         userId: userIdFromReference(fhir.subject.reference),
+        partner: getPartnerFromString(fhir.performer.identifier.value),
         comments: answersToComments(fhir.component),
         timestamp: fhir.effectiveDateTime,
-        status: statusToEnum(fhir.status),
+        status: getStatusFromString(fhir.status),
     } as Comments
 }
 

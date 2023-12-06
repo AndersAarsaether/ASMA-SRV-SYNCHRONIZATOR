@@ -1,7 +1,8 @@
-import { statusToEnum } from '../enums/status'
 import { FeedbackFHIR, Answer } from '../model-partners/feedback.model'
 import { Ratings, Rating } from '../model-advoca/ratings.model'
 import { userIdFromReference } from '../utils/mapper.util'
+import { getPartnerFromString } from '../utils/partner.util'
+import { getStatusFromString } from '../utils/status.util'
 
 export function FHIRFeedbackToRatings(fhir: FeedbackFHIR): Ratings {
     if (!fhir.referenceRange) {
@@ -10,11 +11,12 @@ export function FHIRFeedbackToRatings(fhir: FeedbackFHIR): Ratings {
 
     return {
         userId: userIdFromReference(fhir.subject.reference),
+        partner: getPartnerFromString(fhir.performer.identifier.value),
         minVal: fhir.referenceRange[0].low.value,
         maxVal: fhir.referenceRange[0].high.value,
         scores: answersToRatings(fhir.component),
         timestamp: fhir.effectiveDateTime,
-        status: statusToEnum(fhir.status),
+        status: getStatusFromString(fhir.status),
     } as Ratings
 }
 

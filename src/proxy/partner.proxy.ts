@@ -1,9 +1,9 @@
 import retry from 'retry'
 import fetch from 'node-fetch'
-import { UserFHIR } from '../model-partners/user.model'
+import { UserFHIR } from '../schemas/user'
 import Credentials from '../types/credentials'
-import HttpError from '../types/httpError'
-import { createHttpError, isHttpError } from '../utils/httpError.util'
+import HttpError from '../errors/httpError'
+import { createHttpError, isHttpError } from '../utils/error.util'
 import { shouldRetry } from '../utils/retry.util'
 
 export async function postUser(user: UserFHIR, credentials: Credentials, authToken: string): Promise<string> {

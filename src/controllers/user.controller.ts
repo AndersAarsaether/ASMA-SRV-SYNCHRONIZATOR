@@ -1,5 +1,5 @@
 import { Express, Request, Response } from 'express'
-import { User } from '../model-advoca/user.model'
+import { User } from '../model/user'
 import handlePostUser from '../handlers/user.post.handler'
 
 export default function initialize(app: Express) {

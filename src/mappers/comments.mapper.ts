@@ -1,23 +1,23 @@
-import { FeedbackFHIR, Answer } from '../model-partners/feedback.model'
-import { Comments, Comment } from '../model-advoca/comments.model'
-import { userIdFromReference } from '../utils/mapper.util'
-import { getPartnerFromString } from '../utils/partner.util'
-import { getStatusFromString } from '../utils/status.util'
+import { FeedbackFHIR } from '../schemas/feedback'
+import { Comments, Comment } from '../types/comments'
+import { getPartnerFromFHIR, getStatusFromFHIR, getTimestampFromFHIR, getUserIdFromFHIR } from '../utils/mapper.util'
 
-export function FHIRCommentsToComments(fhir: FeedbackFHIR): Comments {
-    return {
-        userId: userIdFromReference(fhir.subject.reference),
-        partner: getPartnerFromString(fhir.performer[0].identifier.value),
-        comments: answersToComments(fhir.component),
-        timestamp: fhir.effectiveDateTime,
-        status: getStatusFromString(fhir.status),
-    } as Comments
+function getScoresFromFHIR(fhir: FeedbackFHIR): Comment[] {
+    try {
+        return fhir.component.map((answer) => ({ activity: answer.code.text, text: answer.valueString } as Comment))
+    } catch (error) {
+        throw new Error(`Failed to map answers to ratings: ${error.message}`)
+    }
 }
 
-function answersToComments(answers: Answer[]): Comment[] {
-    try {
-        return answers.map((answer) => ({ activity: answer.code.text, text: answer.valueString } as Comment))
-    } catch (error) {
-        throw new Error(`Failed to map answers to comments: ${error.message}`)
+export function FHIRFeedbackToRComments(fhir: FeedbackFHIR): Comments {
+    const comments: Comments = {
+        userId: getUserIdFromFHIR(fhir),
+        partner: getPartnerFromFHIR(fhir),
+        comments: getScoresFromFHIR(fhir),
+        timestamp: getTimestampFromFHIR(fhir),
+        status: getStatusFromFHIR(fhir),
     }
+
+    return comments
 }

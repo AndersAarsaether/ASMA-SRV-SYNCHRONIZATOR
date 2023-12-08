@@ -1,9 +1,21 @@
-export function userIdFromReference(reference: string): string {
-    const typeAndUserId = reference.split('/')
+import Partner from '../enums/partner'
+import Status from '../enums/status'
+import { FeedbackFHIR } from '../schemas/feedback'
+import { getPartnerFromString } from './partner.util'
+import { getStatusFromString } from './status.util'
 
-    if (typeAndUserId.length !== 2 || !typeAndUserId[1]) {
-        throw new Error(`Invalid subject reference: ${reference}`)
-    } else {
-        return typeAndUserId[1]
-    }
+export function getUserIdFromFHIR(fhir: FeedbackFHIR): string {
+    return fhir.subject.identifier.value
+}
+
+export function getPartnerFromFHIR(fhir: FeedbackFHIR): Partner {
+    return getPartnerFromString(fhir.performer[0]!.identifier.value)
+}
+
+export function getStatusFromFHIR(fhir: FeedbackFHIR): Status {
+    return getStatusFromString(fhir.status)
+}
+
+export function getTimestampFromFHIR(fhir: FeedbackFHIR): string {
+    return fhir.effectiveDateTime
 }

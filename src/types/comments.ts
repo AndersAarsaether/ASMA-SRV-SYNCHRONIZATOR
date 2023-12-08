@@ -1,17 +1,15 @@
 import Partner from '../enums/partner'
 import Status from '../enums/status'
 
-export interface Ratings {
+export type Comments = {
     userId: string
     partner: Partner
-    minVal: number
-    maxVal: number
-    scores: Rating[]
+    comments: Comment[]
     timestamp: string
     status: Status
 }
 
-export interface Rating {
+export type Comment = {
     activity: string
-    score: number
+    text: string
 }

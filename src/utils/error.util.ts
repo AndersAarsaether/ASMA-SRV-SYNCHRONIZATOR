@@ -1,4 +1,4 @@
-import HttpError from '../types/httpError'
+import HttpError from '../errors/httpError'
 
 // Function to create an error object that conforms to the HttpError interface
 export function createHttpError(statusCode: number): HttpError {

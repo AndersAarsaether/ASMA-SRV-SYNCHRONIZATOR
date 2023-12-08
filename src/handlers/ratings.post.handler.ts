@@ -1,4 +1,4 @@
-import { FeedbackFHIR } from '../model-partners/feedback.model'
+import { FeedbackFHIR } from '../schemas/feedback'
 import { FHIRFeedbackToRatings } from '../mappers/ratings.mapper'
 import { storeFeedbackRatings } from '../proxy/advoca.proxy'
 

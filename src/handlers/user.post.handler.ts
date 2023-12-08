@@ -1,5 +1,5 @@
 import { userToFHIRUser } from '../mappers/user.mapper'
-import { User } from '../model-advoca/user.model'
+import { User } from '../model/user'
 import { postUser } from '../proxy/partner.proxy'
 import { getPartnerFromString, getCredentialsFromPartner } from '../utils/partner.util'
 

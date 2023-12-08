@@ -1,5 +1,5 @@
-import { Ratings } from '../model-advoca/ratings.model'
-import { Comments } from '../model-advoca/comments.model'
+import { Ratings } from '../types/ratings'
+import { Comments } from '../types/comments'
 
 export function storeFeedbackRatings(ratings: Ratings): void {
     console.log(`Ratings stored: ${JSON.stringify(ratings)}`)

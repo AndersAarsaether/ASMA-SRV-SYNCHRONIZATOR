@@ -14,6 +14,6 @@ export function isHttpError(error: Error): boolean {
 
 export function getZodTypeErrors(error: ZodError): string[] {
     return error.errors.map((e) =>
-        e.message === 'Required' ? `Missing required field ${e.path.join('/')}` : e.message,
+        e.message === 'Required' ? `Missing required field: ${e.path.join('/')}` : e.message,
     )
 }

@@ -1,9 +1,10 @@
 import { Express, Request, Response } from 'express'
 import handlePostUser from '../handlers/user.post.handler'
-import { User } from '../model/user'
+import { User, UserSchema } from '../schemas/user'
+import dataValidator from '../validators/dataValidator'
 
 export default function initialize(app: Express) {
-    app.post('/users', async (req: Request, res: Response) => {
+    app.post('/users', dataValidator(UserSchema), async (req: Request, res: Response) => {
         try {
             const user: User = req.body
             // Already checked that partner parameter and auth token was provided

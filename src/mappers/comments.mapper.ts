@@ -1,22 +1,17 @@
-import { FeedbackFHIR } from '../schemas/feedback'
-import { Comments, Comment } from '../types/comments'
-import { getPartnerFromFHIR, getStatusFromFHIR, getTimestampFromFHIR, getUserIdFromFHIR } from '../utils/mapper.util'
+import { CommentsFHIR, Comments } from '../schemas/comments'
 
-function getScoresFromFHIR(fhir: FeedbackFHIR): Comment[] {
-    try {
-        return fhir.component.map((answer) => ({ activity: answer.code.text, text: answer.valueString } as Comment))
-    } catch (error) {
-        throw new Error(`Failed to map answers to ratings: ${error.message}`)
-    }
-}
-
-export function FHIRFeedbackToComments(fhir: FeedbackFHIR): Comments {
+export function FHIRCommentsToComments(fhirComments: CommentsFHIR): Comments {
     const comments: Comments = {
-        userId: getUserIdFromFHIR(fhir),
-        partner: getPartnerFromFHIR(fhir),
-        comments: getScoresFromFHIR(fhir),
-        timestamp: getTimestampFromFHIR(fhir),
-        status: getStatusFromFHIR(fhir),
+        userId: fhirComments.subject.identifier.value,
+        partner: fhirComments.performer[0]!.identifier.value,
+        comments: fhirComments.component.map((comp) => {
+            return {
+                activity: comp.code.text,
+                text: comp.valueString,
+            }
+        }),
+        timestamp: fhirComments.effectiveDateTime,
+        status: fhirComments.status,
     }
 
     return comments

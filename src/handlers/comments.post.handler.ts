@@ -1,8 +1,8 @@
-import { FeedbackFHIR } from '../schemas/feedback'
-import { FHIRFeedbackToComments } from '../mappers/comments.mapper'
+import { CommentsFHIR } from '../schemas/comments'
+import { FHIRCommentsToComments } from '../mappers/comments.mapper'
 import { storeFeedbackComments } from '../proxy/advoca.proxy'
 
-export default function handlePostComments(feedback: FeedbackFHIR): void {
-    const comments = FHIRFeedbackToComments(feedback)
+export default function handlePostComments(fhirComments: CommentsFHIR): void {
+    const comments = FHIRCommentsToComments(fhirComments)
     storeFeedbackComments(comments)
 }

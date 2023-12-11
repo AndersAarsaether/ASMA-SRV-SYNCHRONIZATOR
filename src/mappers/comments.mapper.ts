@@ -10,7 +10,7 @@ function getScoresFromFHIR(fhir: FeedbackFHIR): Comment[] {
     }
 }
 
-export function FHIRFeedbackToRComments(fhir: FeedbackFHIR): Comments {
+export function FHIRFeedbackToComments(fhir: FeedbackFHIR): Comments {
     const comments: Comments = {
         userId: getUserIdFromFHIR(fhir),
         partner: getPartnerFromFHIR(fhir),

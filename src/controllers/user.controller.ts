@@ -1,6 +1,6 @@
 import { Express, Request, Response } from 'express'
-import { User } from '../model/user'
 import handlePostUser from '../handlers/user.post.handler'
+import { User } from '../model/user'
 
 export default function initialize(app: Express) {
     app.post('/users', async (req: Request, res: Response) => {

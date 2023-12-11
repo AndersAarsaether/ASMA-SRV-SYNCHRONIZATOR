@@ -7,9 +7,5 @@ export default async function handlePostUser(user: User, partnerString: string, 
     const fhirUser = userToFHIRUser(user)
     const partner = getPartnerFromString(partnerString)
     const credentials = getCredentialsFromPartner(partner)
-    return postUser(fhirUser, credentials, authToken)
-        .then((response) => JSON.parse(response))
-        .catch((error) => {
-            throw new Error(error)
-        })
+    return postUser(fhirUser, credentials, authToken).then((response) => JSON.parse(response))
 }

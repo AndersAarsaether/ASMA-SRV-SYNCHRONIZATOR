@@ -6,7 +6,7 @@ export const FeedbackFHIRSchema = z.object({
     resourceType: z.literal('Observation'),
     status: z.nativeEnum(Status),
     code: z.object({
-        text: z.enum(['activity-rankings', 'activity-comments']),
+        text: z.enum(['activity-ratings', 'activity-comments']),
     }),
     subject: z.object({
         identifier: z.object({
@@ -35,7 +35,8 @@ export const FeedbackFHIRSchema = z.object({
                 high: z.object({ value: z.number() }),
             }),
         )
-        .length(1),
+        .length(1)
+        .optional(),
     component: z
         .array(
             z.object({

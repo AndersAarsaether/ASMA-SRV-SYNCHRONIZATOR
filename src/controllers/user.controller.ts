@@ -2,6 +2,8 @@ import { Express, Request, Response } from 'express'
 import handlePostUser from '../handlers/user.post.handler'
 import { User, UserSchema } from '../schemas/user'
 import dataValidator from '../validators/dataValidator'
+import { ZodError } from 'zod'
+import { getZodTypeErrors } from '../utils/error.util'
 
 export default function initialize(app: Express) {
     app.post('/users', dataValidator(UserSchema), async (req: Request, res: Response) => {
@@ -16,7 +18,10 @@ export default function initialize(app: Express) {
         } catch (error) {
             const description = error?.message
             const recipient = req.query.partner as string
-            res.status(500).json({ error: `Failed to post the user to ${recipient}`, description })
+            res.status(500).json({
+                message: `Failed to post the user to ${recipient}`,
+                errors: error instanceof ZodError ? getZodTypeErrors(error) : description,
+            })
         }
     })
 }

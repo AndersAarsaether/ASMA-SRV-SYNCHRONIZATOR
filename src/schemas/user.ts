@@ -2,22 +2,20 @@ import { z } from 'zod'
 
 export const UserFHIRSchema = z.object({
     resourceType: z.literal('Patient'),
-    identifier: z
-        .array(
-            z.object({
-                type: z.object({
-                    text: z.literal('userId'),
-                }),
-                value: z.string(),
+    identifier: z.tuple([
+        z.object({
+            type: z.object({
+                text: z.literal('userId'),
             }),
-            z.object({
-                type: z.object({
-                    text: z.literal('groupId'),
-                }),
-                value: z.string(),
+            value: z.string(),
+        }),
+        z.object({
+            type: z.object({
+                text: z.literal('groupId'),
             }),
-        )
-        .length(2),
+            value: z.string(),
+        }),
+    ]),
     name: z.array(z.object({ text: z.string().regex(/^[^0-9]*$/) })).length(1),
     contact: z
         .array(

@@ -1,7 +1,7 @@
-import { CommentsFHIR, Comments } from '../schemas/comments'
+import { CommentsFHIR, Comments, CommentsSchema } from '../schemas/comments'
 
 export function FHIRCommentsToComments(fhirComments: CommentsFHIR): Comments {
-    const comments: Comments = {
+    const object = {
         userId: fhirComments.subject.identifier.value,
         partner: fhirComments.performer[0]!.identifier.value,
         comments: fhirComments.component.map((comp) => {
@@ -14,5 +14,5 @@ export function FHIRCommentsToComments(fhirComments: CommentsFHIR): Comments {
         status: fhirComments.status,
     }
 
-    return comments
+    return CommentsSchema.parse(object)
 }

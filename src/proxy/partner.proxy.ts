@@ -20,8 +20,8 @@ export async function postUser(user: UserFHIR, credentials: Credentials, authTok
 
         operation.attempt(async (currentAttempt) => {
             try {
-                // const responseMsg = await tryToSendUser(body, resourceUrl, apiKey, authToken)
-                // resolve(responseMsg)
+                const responseMsg = await tryToSendUser(body, resourceUrl, apiKey, authToken)
+                resolve(responseMsg)
             } catch (error) {
                 if (isHttpError(error)) {
                     const httpError = error as HttpError

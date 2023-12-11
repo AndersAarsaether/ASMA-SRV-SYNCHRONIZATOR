@@ -1,7 +1,7 @@
-import { RatingsFHIR, Ratings } from '../schemas/ratings'
+import { RatingsFHIR, Ratings, RatingsSchema } from '../schemas/ratings'
 
 export function FHIRFeedbackToRatings(fhirRatings: RatingsFHIR): Ratings {
-    const ratings: Ratings = {
+    const object = {
         userId: fhirRatings.subject.identifier.value,
         partner: fhirRatings.performer[0]!.identifier.value,
         range: {
@@ -18,5 +18,5 @@ export function FHIRFeedbackToRatings(fhirRatings: RatingsFHIR): Ratings {
         status: fhirRatings.status,
     }
 
-    return ratings
+    return RatingsSchema.parse(object)
 }

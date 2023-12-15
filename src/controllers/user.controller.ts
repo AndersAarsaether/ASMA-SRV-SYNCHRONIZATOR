@@ -14,7 +14,7 @@ export default function initialize(app: Express) {
             const authToken = req.headers.authorization as string
 
             const responseMsg = await handlePostUser(user, partner, authToken)
-            res.status(200).json({ success: responseMsg })
+            res.status(200).json({ message: responseMsg })
         } catch (error) {
             const description = error?.message
             const recipient = req.query.partner as string

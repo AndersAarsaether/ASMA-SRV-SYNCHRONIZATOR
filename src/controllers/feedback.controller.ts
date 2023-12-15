@@ -13,7 +13,7 @@ export default function initialize(app: Express) {
         try {
             const ratings: RatingsFHIR = req.body
             handlePostRatings(ratings)
-            res.status(200).json({ success: 'Successfully stored the ratings' })
+            res.status(200).json({ message: 'Successfully stored the ratings' })
         } catch (error) {
             const description = error?.message
             res.status(500).json({
@@ -27,7 +27,7 @@ export default function initialize(app: Express) {
         try {
             const comments: CommentsFHIR = req.body
             handlePostComments(comments)
-            res.status(200).json({ success: 'Successfully stored the comments' })
+            res.status(200).json({ message: 'Successfully stored the comments' })
         } catch (error) {
             const description = error?.message
             res.status(500).json({

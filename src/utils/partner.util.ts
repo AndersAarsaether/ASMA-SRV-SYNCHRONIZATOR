@@ -1,5 +1,5 @@
 import Partner from '../enums/partner'
-import { EnvConfigs } from '../envConfigs'
+import { EnvConfigs } from '../EnvConfigs'
 import Credentials from '../types/credentials'
 
 export function isValidPartnerString(partnerString: string): boolean {

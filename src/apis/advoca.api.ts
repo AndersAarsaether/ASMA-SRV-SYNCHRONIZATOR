@@ -1,7 +1,7 @@
 import express, { json } from 'express'
 import helmet from 'helmet'
 
-import { EnvConfigs } from '../envConfigs'
+import { EnvConfigs } from '../EnvConfigs'
 import { checkAuthHeader } from '../validators/headerValidators'
 import { chechPartnerParameter } from '../validators/paramValidators'
 

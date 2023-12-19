@@ -1,3 +1,4 @@
+import Status from '../enums/status'
 import { RatingsFHIR, Ratings, RatingsSchema } from '../schemas/ratings'
 
 export function FHIRFeedbackToRatings(fhirRatings: RatingsFHIR): Ratings {
@@ -15,7 +16,7 @@ export function FHIRFeedbackToRatings(fhirRatings: RatingsFHIR): Ratings {
             }
         }),
         timestamp: fhirRatings.effectiveDateTime,
-        status: fhirRatings.status,
+        status: fhirRatings.status ?? Status.Continuous,
     }
 
     return RatingsSchema.parse(object)

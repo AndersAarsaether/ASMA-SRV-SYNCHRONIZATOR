@@ -5,9 +5,6 @@ import Partner from '../enums/partner'
 export const CommentsFHIRSchema = z.object({
     resourceType: z.literal('Observation'),
     status: z.nativeEnum(Status),
-    code: z.object({
-        text: z.literal('activity-comments'),
-    }),
     subject: z.object({
         identifier: z.object({
             value: z.string(),

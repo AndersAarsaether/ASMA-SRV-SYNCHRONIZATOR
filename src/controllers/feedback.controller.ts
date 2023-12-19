@@ -18,7 +18,7 @@ export default function initialize(app: Express) {
             const description = error?.message
             res.status(500).json({
                 message: `Failed to store the ratings`,
-                errors: error instanceof ZodError ? getZodTypeErrors(error) : description,
+                errors: error instanceof ZodError ? getZodTypeErrors(error) : [description],
             })
         }
     })
@@ -32,7 +32,7 @@ export default function initialize(app: Express) {
             const description = error?.message
             res.status(500).json({
                 message: `Failed to store the comments`,
-                errors: error instanceof ZodError ? getZodTypeErrors(error) : description,
+                errors: error instanceof ZodError ? getZodTypeErrors(error) : [description],
             })
         }
     })

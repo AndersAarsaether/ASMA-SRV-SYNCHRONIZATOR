@@ -4,10 +4,7 @@ import Partner from '../enums/partner'
 
 export const RatingsFHIRSchema = z.object({
     resourceType: z.literal('Observation'),
-    status: z.nativeEnum(Status),
-    code: z.object({
-        text: z.literal('activity-ratings'),
-    }),
+    status: z.nativeEnum(Status).optional(),
     subject: z.object({
         identifier: z.object({
             value: z.string(),

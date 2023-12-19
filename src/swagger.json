@@ -21,13 +21,15 @@
                             },
                             "example": {
                                 "resourceType": "Observation",
+                                "status": "before",
+                                "code": { "text": "activity-ratings" },
                                 "subject": { "identifier": { "value": "T1000" } },
-                                "effectiveDateTime": "2023-12-12T06:49:58.000Z",
                                 "performer": [
                                     {
                                         "identifier": { "value": "adfectus" }
                                     }
                                 ],
+                                "effectiveDateTime": "2023-12-12T06:49:58.000Z",
                                 "referenceRange": [
                                     {
                                         "low": { "value": 1 },
@@ -69,6 +71,7 @@
                             "example": {
                                 "resourceType": "Observation",
                                 "status": "final",
+                                "code": { "text": "activity-comments" },
                                 "subject": { "identifier": { "value": "T1000" } },
                                 "performer": [
                                     {
@@ -116,6 +119,9 @@
                     "status": {
                         "$ref": "#/components/schemas/status"
                     },
+                    "code": {
+                        "$ref": "#/components/schemas/ratingsCode"
+                    },
                     "subject": {
                         "$ref": "#/components/schemas/patient"
                     },
@@ -150,6 +156,9 @@
                     "status": {
                         "$ref": "#/components/schemas/status"
                     },
+                    "code": {
+                        "$ref": "#/components/schemas/commentsCode"
+                    },
                     "subject": {
                         "$ref": "#/components/schemas/patient"
                     },
@@ -174,6 +183,26 @@
             "status": {
                 "type": "string",
                 "enum": ["before", "mid", "continous", "final"]
+            },
+            "ratingsCode": {
+                "type": "object",
+                "required": ["text"],
+                "properties": {
+                    "text": {
+                        "type": "string",
+                        "enum": ["activity-ratings"]
+                    }
+                }
+            },
+            "commentsCode": {
+                "type": "object",
+                "required": ["text"],
+                "properties": {
+                    "text": {
+                        "type": "string",
+                        "enum": ["activity-comments"]
+                    }
+                }
             },
             "patient": {
                 "type": "object",

@@ -27,14 +27,13 @@ export default function InitializeAPI() {
     advocaAPI.disable('etag').disable('x-powered-by')
 
     // Get port from environment
-    const PORT = EnvConfigs.INTERNAL_PORT
+    const port = EnvConfigs.INTERNAL_PORT
 
     // Start server on port
-    advocaAPI.listen(PORT)
+    advocaAPI.listen(port, () => {
+        console.log('AdVoca API running on port:', port)
+    })
 
     // Initialize user controller
     initializeUserRoutes(advocaAPI)
-
-    // Display that the API is running
-    console.log('AdVoca API running on port:', PORT)
 }

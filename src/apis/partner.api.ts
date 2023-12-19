@@ -23,14 +23,13 @@ export default function InitializeAPI() {
     partnerAPI.disable('etag').disable('x-powered-by')
 
     // Get port from environment
-    const PORT = EnvConfigs.EXTERNAL_PORT
+    const port = EnvConfigs.EXTERNAL_PORT
 
     // Start server on port
-    partnerAPI.listen(PORT)
+    partnerAPI.listen(port, () => {
+        console.log('Partner API running on port:', port)
+    })
 
     // Initialize feedback controller
     initializeFeedbackRoutes(partnerAPI)
-
-    // Display that the API is running
-    console.log('Partner API running on port:', PORT)
 }

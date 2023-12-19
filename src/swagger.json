@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.1",
     "info": {
-        "title": "Swagger documentation for Open API",
+        "title": "Swagger documentation for Carasent Open API",
         "version": "1.0.0"
     },
     "schemes": ["http"],

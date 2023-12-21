@@ -1,19 +1,22 @@
 import { Request, Response, NextFunction } from 'express'
 import { isValidPartnerString } from '../utils/partner.util'
+import { ErrorResponse } from '../types/responses'
 
 export function chechPartnerParameter(req: Request, res: Response, next: NextFunction): void {
     // Get partner parameter
     const partnerParam = req.query.partner as string
     // Check if partner parameter was provided
     if (!partnerParam) {
-        res.status(400).json({ message: 'Bad Request', error: 'Missing search parameter: partner' })
+        const response: ErrorResponse = { message: 'Bad Request', errors: ['Missing search parameter: partner'] }
+        res.status(400).json(response)
         return
     }
     // Check if parameter contains valid partner
     const validPartner = isValidPartnerString(partnerParam)
     // If invalid, return error
     if (!validPartner) {
-        res.status(400).json({ message: 'Bad Request', error: `${partnerParam} is not a valid partner` })
+        const response: ErrorResponse = { message: 'Bad Request', errors: [`${partnerParam} is not a valid partner`] }
+        res.status(400).json(response)
         return
     }
     // If the partner parameter is OK, proceed to next middleware function

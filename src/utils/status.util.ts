@@ -11,6 +11,6 @@ export function getStatusFromString(status: string): Status {
         case 'final':
             return Status.Final
         default:
-            return Status.Continuous
+            return Status.During
     }
 }

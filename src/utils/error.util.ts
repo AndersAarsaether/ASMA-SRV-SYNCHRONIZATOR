@@ -1,14 +1,14 @@
-import HttpError from '../errors/httpError'
+import ErrorWithCode from '../types/errorWithCode'
 import { ZodError } from 'zod'
 
-// Function to create an error object that conforms to the HttpError interface
-export function createHttpError(statusCode: number): HttpError {
-    const error = new Error('HTTP error') as HttpError
+// Function to create an error object that conforms to the ErrorWithCode interface
+export function createErrorWithCode(statusCode: number): ErrorWithCode {
+    const error = new Error('HTTP error') as ErrorWithCode
     error.statusCode = statusCode
     return error
 }
 
-export function isHttpError(error: Error): boolean {
+export function isErrorWithCode(error: Error): boolean {
     return typeof error === 'object' && error !== null && 'statusCode' in error
 }
 

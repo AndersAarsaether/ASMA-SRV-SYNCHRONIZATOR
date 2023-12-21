@@ -2,6 +2,6 @@ enum Status {
     Before = 'before',
     Mid = 'mid',
     Final = 'final',
-    Continuous = 'continuous',
+    During = 'during',
 }
 export default Status

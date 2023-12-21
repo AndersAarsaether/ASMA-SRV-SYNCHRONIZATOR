@@ -2,8 +2,8 @@ import retry from 'retry'
 import fetch from 'node-fetch'
 import { UserFHIR } from '../schemas/user'
 import Credentials from '../types/credentials'
-import HttpError from '../errors/httpError'
-import { createHttpError, isHttpError } from '../utils/error.util'
+import ErrorWithStatus from '../types/errorWithCode'
+import { createErrorWithCode, isErrorWithCode } from '../utils/error.util'
 import { shouldRetry } from '../utils/retry.util'
 
 export async function postUser(user: UserFHIR, credentials: Credentials, authToken: string): Promise<string> {
@@ -23,11 +23,13 @@ export async function postUser(user: UserFHIR, credentials: Credentials, authTok
                 const responseMsg = await tryToSendUser(body, resourceUrl, apiKey, authToken)
                 resolve(responseMsg)
             } catch (error) {
-                if (isHttpError(error)) {
-                    const httpError = error as HttpError
-                    if (!shouldRetry(httpError.statusCode)) {
-                        console.log(`The partner API responded with ${httpError.statusCode} when trying to add a user`)
-                        reject(`The partner API responded with ${httpError.statusCode}`)
+                if (isErrorWithCode(error)) {
+                    const errorWithCode = error as ErrorWithStatus
+                    if (!shouldRetry(errorWithCode.statusCode)) {
+                        console.log(
+                            `The partner API responded with ${errorWithCode.statusCode} when trying to add a user`,
+                        )
+                        reject(`The partner API responded with ${errorWithCode.statusCode}`)
                         return
                     }
                 }
@@ -54,8 +56,8 @@ async function tryToSendUser(body: string, resourceUrl: string, key: string, aut
         body: body,
     })
     if (!response.ok) {
-        const httpError = createHttpError(response.status)
-        throw httpError
+        const errorWithCode = createErrorWithCode(response.status)
+        throw errorWithCode
     } else {
         const responseMsg = await response.json()
         return JSON.stringify(responseMsg)

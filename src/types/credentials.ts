@@ -1,6 +1,4 @@
-type Credentials = {
+export default interface Credentials {
     apiKey: string
     resourceUrl: string
 }
-
-export default Credentials

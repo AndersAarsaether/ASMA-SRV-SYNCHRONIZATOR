@@ -51,8 +51,46 @@
                     }
                 },
                 "responses": {
-                    "200": { "message": "Successfully stored the ratings" },
-                    "500": { "message": "Failed to store the ratings", "errors": [] }
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/success" }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "The request body does not conform to the schema",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/error" }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Could not validate the API key",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/error" }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Incorrect API key",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/error" }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/error" }
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -94,8 +132,46 @@
                     }
                 },
                 "responses": {
-                    "200": { "message": "Successfully stored the ratings" },
-                    "500": { "message": "Failed to store the ratings", "errors": [] }
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/success" }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "The request body does not conform to the schema",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/error" }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Could not validate the API key",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/error" }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Incorrect API key",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/error" }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/error" }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -104,6 +180,7 @@
         "schemas": {
             "ratings": {
                 "type": "object",
+                "description": "Information about ratings in FHIR format",
                 "required": [
                     "resourceType",
                     "subject",
@@ -141,6 +218,7 @@
             },
             "comments": {
                 "type": "object",
+                "description": "Information about comments in FHIR format",
                 "required": [
                     "resourceType",
                     "subject",
@@ -178,14 +256,17 @@
             },
             "type": {
                 "type": "string",
+                "description": "The FHIR resource type",
                 "enum": ["Observation"]
             },
             "status": {
                 "type": "string",
-                "enum": ["before", "mid", "continous", "final"]
+                "description": "When the feedback was given relative to the treatment (default is \"during\")",
+                "enum": ["before", "mid", "during", "final"]
             },
             "ratingsCode": {
                 "type": "object",
+                "description": "The type of feedback",
                 "required": ["text"],
                 "properties": {
                     "text": {
@@ -196,6 +277,7 @@
             },
             "commentsCode": {
                 "type": "object",
+                "description": "The type of feedback",
                 "required": ["text"],
                 "properties": {
                     "text": {
@@ -206,6 +288,7 @@
             },
             "patient": {
                 "type": "object",
+                "description": "The ID of the patient that gave the feedback",
                 "required": ["identifier"],
                 "properties": {
                     "identifier": {
@@ -221,6 +304,7 @@
             },
             "sender": {
                 "type": "array",
+                "description": "The partner organization that sent the feedback",
                 "minItems": 1,
                 "maxItems": 1,
                 "items": {
@@ -242,10 +326,12 @@
             },
             "timestamp": {
                 "type": "string",
+                "description": "When the feedback was given",
                 "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})?$"
             },
             "range": {
                 "type": "array",
+                "description": "Range of possible scores",
                 "minItems": 1,
                 "maxItems": 1,
                 "items": {
@@ -275,6 +361,7 @@
             },
             "scores": {
                 "type": "array",
+                "description": "The scores given by the patient for an activity",
                 "minItems": 1,
                 "items": {
                     "type": "object",
@@ -297,6 +384,7 @@
             },
             "answers": {
                 "type": "array",
+                "description": "The comments given by the patient for an activity",
                 "minItems": 1,
                 "items": {
                     "type": "object",
@@ -313,6 +401,36 @@
                         },
                         "valueString": {
                             "type": "string"
+                        }
+                    }
+                }
+            },
+            "success": {
+                "type": "object",
+                "description": "The response for successfull requests",
+                "required": ["message"],
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "description": "Success response from the server"
+                    }
+                }
+            },
+            "error": {
+                "type": "object",
+                "description": "The response for failed requests",
+                "required": ["message", "errors"],
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "description": "The action that failed"
+                    },
+                    "errors": {
+                        "type": "array",
+                        "minItems": 1,
+                        "items": {
+                            "type": "string",
+                            "description": "Relevant error messages"
                         }
                     }
                 }

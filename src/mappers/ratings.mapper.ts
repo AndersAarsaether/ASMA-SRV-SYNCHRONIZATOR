@@ -16,7 +16,7 @@ export function FHIRFeedbackToRatings(fhirRatings: RatingsFHIR): Ratings {
             }
         }),
         timestamp: fhirRatings.effectiveDateTime,
-        status: fhirRatings.status ?? Status.Continuous,
+        status: fhirRatings.status ?? Status.During,
     }
 
     return RatingsSchema.parse(object)

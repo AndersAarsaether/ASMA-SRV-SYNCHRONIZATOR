@@ -1,25 +1,28 @@
 import { Express, Request, Response } from 'express'
+import { ZodError } from 'zod'
+
 import handlePostComments from '../handlers/comments.post.handler'
 import handlePostRatings from '../handlers/ratings.post.handler'
-
 import dataValidator from '../validators/dataValidator'
 import { RatingsFHIRSchema, RatingsFHIR } from '../schemas/ratings'
 import { CommentsFHIRSchema, CommentsFHIR } from '../schemas/comments'
-import { ZodError } from 'zod'
 import { getZodTypeErrors } from '../utils/error.util'
+import { ErrorResponse, SuccessResponse } from '../types/responses'
 
 export default function initialize(app: Express) {
     app.post('/activities/ratings', dataValidator(RatingsFHIRSchema), (req: Request, res: Response) => {
         try {
             const ratings: RatingsFHIR = req.body
             handlePostRatings(ratings)
-            res.status(200).json({ message: 'Successfully stored the ratings' })
+            const response: SuccessResponse = { message: 'Successfully stored the ratings' }
+            res.status(200).json(response)
         } catch (error) {
-            const description = error?.message
-            res.status(500).json({
-                message: `Failed to store the ratings`,
+            const description = error?.message as string
+            const response: ErrorResponse = {
+                message: 'Failed to store the ratings',
                 errors: error instanceof ZodError ? getZodTypeErrors(error) : [description],
-            })
+            }
+            res.status(500).json(response)
         }
     })
 
@@ -27,13 +30,15 @@ export default function initialize(app: Express) {
         try {
             const comments: CommentsFHIR = req.body
             handlePostComments(comments)
-            res.status(200).json({ message: 'Successfully stored the comments' })
+            const response: SuccessResponse = { message: 'Successfully stored the comments' }
+            res.status(200).json(response)
         } catch (error) {
-            const description = error?.message
-            res.status(500).json({
-                message: `Failed to store the comments`,
+            const description = error?.message as string
+            const response: ErrorResponse = {
+                message: 'Failed to store the comments',
                 errors: error instanceof ZodError ? getZodTypeErrors(error) : [description],
-            })
+            }
+            res.status(500).json(response)
         }
     })
 }

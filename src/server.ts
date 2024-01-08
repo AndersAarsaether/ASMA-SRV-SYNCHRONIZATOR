@@ -6,9 +6,6 @@ import PartnerAPI from './apis/partner.api'
 import * as documentation from './swagger.json'
 import { EnvConfigs } from './EnvConfigs'
 
-// Empty line between compile messages and runtime messages
-console.log()
-
 // Initialize APIs
 PartnerAPI()
 AdvocaAPI()

@@ -1,0 +1,116 @@
+version: '3.8'
+networks:
+    asma:
+        name: asma
+
+services:
+    asma-srv-synchronizator:
+        container_name: asma-srv-synchronizator
+        stdin_open: true
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - '9100:9100'
+        restart: unless-stopped
+        environment:
+            NODE_ENV: development
+            DEBUG_MODE: 'true'
+            PORT: 9100
+            DEVELOPMENT: 'true'
+            NODE_TLS_REJECT_UNAUTHORIZED: 0
+            REFRESH_TOKEN_TTL_MIN: ${REFRESH_TOKEN_TTL_MIN}
+            TOKEN_TTL_SEC: ${TOKEN_TTL_SEC}
+            # Set your database/API connection information here
+            API_KEY: ${EXTERNAL_API_KEY}
+            API_URL: ${EXTERNAL_API_URL_NONPROD}
+
+            SRV_DIRECTORY: ${SRV_DIRECTORY_NONPROD}
+            SRV_PROXY: ${SRV_PROXY_NONPROD}
+            SRV_DIRECTORY_SECRET: ${SRV_DIRECTORY_SECRET_NONPROD}
+
+            SALT_VERSION: 2
+
+            # dev test stage
+            JWT_SECRET: ${JWT_SECRET_NONPROD}
+            #prod
+            JWT_SECRET_PROD: ${JWT_SECRET_PROD}
+            JWT_SECRET_NONPROD: ${JWT_SECRET_NONPROD}
+
+            PREDEFINED_USER_SECRETS: ${PREDEFINED_USER_SECRETS}
+            PREDEFINED_ENVIRONMENTS: ${PREDEFINED_ENVIRONMENTS}
+
+            # dev
+            SIGNICAT_CLIENT_ID: ${SIGNICAT_CLIENT_ID_NONPROD}
+            SIGNICAT_CLIENT_SECRET: ${SIGNICAT_CLIENT_SECRET_NONPROD}
+            SIGNICAT_REDIRECT_URI: ${SIGNICAT_REDIRECT_URI_NONPROD}
+            SIGNICAT_GRANT_TYPE: ${SIGNICAT_GRANT_TYPE_NONPROD}
+            SIGNICAT_AUTH: ${SIGNICAT_AUTH_NONPROD}
+            SIGNICAT_TOKEN: ${SIGNICAT_TOKEN_NONPROD}
+            SIGNICAT_KEYS: ${SIGNICAT_KEYS_NONPROD}
+
+            SIGNICAT_USERNAME: ${SIGNICAT_USERNAME_NONPROD}
+            SIGNICAT_PASSWORD: ${SIGNICAT_PASSWORD_NONPROD}
+
+            LINKMOBILITY_URL: ${LINKMOBILITY_URL_NONPROD}
+            LINKMOBILITY_USER_NAME: ${LINKMOBILITY_USER_NAME_NONPROD}
+            LINKMOBILITY_PASSWORD: ${LINKMOBILITY_PASSWORD_NONPROD}
+            LINKMOBILITY_PLATFORM_ID: ${LINKMOBILITY_PLATFORM_ID_NONPROD}
+            LINKMOBILITY_PLATFORMPARTNER_ID: ${LINKMOBILITY_PLATFORMPARTNER_ID_NONPROD}
+
+    asma-srv-synchronizator-prod:
+        container_name: asma-srv-synchronizator-prod
+        stdin_open: true
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - '9101:9100'
+        # volumes:
+        # - "/auth_dir/node_modules"
+        # - "./:/auth_dir"
+        restart: unless-stopped
+        environment:
+            NODE_ENV: development
+            DEBUG_MODE: 'true'
+            PORT: 9100
+            DEVELOPMENT: 'true'
+            NODE_TLS_REJECT_UNAUTHORIZED: 0
+            REFRESH_TOKEN_TTL_MIN: ${REFRESH_TOKEN_TTL_MIN}
+            TOKEN_TTL_SEC: ${TOKEN_TTL_SEC}
+            # Set your database/API connection information here
+            API_KEY: ${EXTERNAL_API_KEY}
+            API_URL: ${EXTERNAL_API_URL_PROD}
+
+            SRV_DIRECTORY: ${SRV_DIRECTORY_PROD}
+            SRV_PROXY: ${SRV_PROXY_PROD}
+            SRV_DIRECTORY_SECRET: ${SRV_DIRECTORY_SECRET_PROD}
+
+            SALT_VERSION: 2
+
+            JWT_SECRET: ${JWT_SECRET_PROD}
+            # dev test stage
+            JWT_SECRET_NONPROD: ${JWT_SECRET_NONPROD}
+
+            PREDEFINED_USER_SECRETS: ${PREDEFINED_USER_SECRETS}
+
+            PREDEFINED_ENVIRONMENTS: ${PREDEFINED_ENVIRONMENTS}
+            # dev
+            SIGNICAT_CLIENT_ID: ${SIGNICAT_CLIENT_ID_PROD}
+            SIGNICAT_CLIENT_SECRET: ${SIGNICAT_CLIENT_SECRET_PROD}
+            SIGNICAT_REDIRECT_URI: ${SIGNICAT_REDIRECT_URI_PROD}
+            SIGNICAT_GRANT_TYPE: ${SIGNICAT_GRANT_TYPE_PROD}
+            SIGNICAT_AUTH: ${SIGNICAT_AUTH_PROD}
+            SIGNICAT_TOKEN: ${SIGNICAT_TOKEN_PROD}
+            SIGNICAT_KEYS: ${SIGNICAT_KEYS_PROD}
+
+            SIGNICAT_USERNAME: ${SIGNICAT_USERNAME_PROD}
+            SIGNICAT_PASSWORD: ${SIGNICAT_PASSWORD_PROD}
+
+            LINKMOBILITY_URL: ${LINKMOBILITY_URL_PROD}
+            LINKMOBILITY_USER_NAME: ${LINKMOBILITY_USER_NAME_PROD}
+            LINKMOBILITY_PASSWORD: ${LINKMOBILITY_PASSWORD_PROD}
+            LINKMOBILITY_PLATFORM_ID: ${LINKMOBILITY_PLATFORM_ID_PROD}
+            LINKMOBILITY_PLATFORMPARTNER_ID: ${LINKMOBILITY_PLATFORMPARTNER_PRODID}
+        networks:
+            - asma

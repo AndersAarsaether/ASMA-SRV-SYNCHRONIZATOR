@@ -22,8 +22,8 @@ services:
             REFRESH_TOKEN_TTL_MIN: ${REFRESH_TOKEN_TTL_MIN}
             TOKEN_TTL_SEC: ${TOKEN_TTL_SEC}
             # Set your database/API connection information here
-            API_KEY: ${EXTERNAL_API_KEY}
-            API_URL: ${EXTERNAL_API_URL_NONPROD}
+            API_KEY: ${API_KEY}
+            API_URL: ${API_URL_NONPROD}
 
             SRV_DIRECTORY: ${SRV_DIRECTORY_NONPROD}
             SRV_PROXY: ${SRV_PROXY_NONPROD}
@@ -79,8 +79,8 @@ services:
             REFRESH_TOKEN_TTL_MIN: ${REFRESH_TOKEN_TTL_MIN}
             TOKEN_TTL_SEC: ${TOKEN_TTL_SEC}
             # Set your database/API connection information here
-            API_KEY: ${EXTERNAL_API_KEY}
-            API_URL: ${EXTERNAL_API_URL_PROD}
+            API_KEY: ${API_KEY}
+            API_URL: ${API_URL_PROD}
 
             SRV_DIRECTORY: ${SRV_DIRECTORY_PROD}
             SRV_PROXY: ${SRV_PROXY_PROD}

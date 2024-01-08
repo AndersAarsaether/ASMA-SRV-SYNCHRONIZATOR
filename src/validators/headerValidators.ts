@@ -6,7 +6,7 @@ export function validateAPIKey(req: Request, res: Response, next: NextFunction):
     // Get API key from header
     const providedKey = req.header('x-api-key')
     // The correct API key
-    const correctKey = EnvConfigs.EXTERNAL_API_KEY
+    const correctKey = EnvConfigs.API_KEY
     // Check if the API key was provided
     if (!providedKey) {
         const response: ErrorResponse = { message: 'Unauthorized', errors: ['API key is missing'] }

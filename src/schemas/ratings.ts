@@ -32,8 +32,8 @@ export const RatingsFHIRSchema = z.object({
         .array(
             z
                 .object({
-                    low: z.object({ value: z.number() }),
-                    high: z.object({ value: z.number() }),
+                    low: z.object({ value: z.number().int() }),
+                    high: z.object({ value: z.number().int() }),
                 })
                 .refine((data) => data.low.value < data.high.value, {
                     message: 'low must be lower than high',
@@ -46,7 +46,7 @@ export const RatingsFHIRSchema = z.object({
                 code: z.object({
                     text: z.string(),
                 }),
-                valueInteger: z.number(),
+                valueInteger: z.number().int(),
             }),
         )
         .min(1),
@@ -59,8 +59,8 @@ export const RatingsSchema = z.object({
     partner: z.nativeEnum(Partner),
     range: z
         .object({
-            min: z.number(),
-            max: z.number(),
+            min: z.number().int(),
+            max: z.number().int(),
         })
         .refine((data) => data.min < data.max, {
             message: 'min must be less than max',
@@ -68,7 +68,7 @@ export const RatingsSchema = z.object({
     scores: z.array(
         z.object({
             activity: z.string(),
-            score: z.number(),
+            score: z.number().int(),
         }),
     ),
     timestamp: z

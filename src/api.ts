@@ -3,7 +3,7 @@ import helmet from 'helmet'
 import swaggerUi from 'swagger-ui-express'
 import path from 'path'
 
-import * as documentation from './swagger.json'
+import * as documentation from '../swagger.json'
 import { EnvConfigs } from './EnvConfigs'
 
 import initializeUserRoutes from './controllers/users.controller'
@@ -19,9 +19,6 @@ export default function InitializeAPI() {
     // General web security
     api.use(helmet())
 
-    // Documentation server
-    api.use('/api-docs', swaggerUi.serve, swaggerUi.setup(documentation))
-
     // Serve static files from 'public' directory
     api.use(express.static('public'))
 
@@ -32,6 +29,9 @@ export default function InitializeAPI() {
 
     // Disable etag and x-powered-by headers
     api.disable('etag').disable('x-powered-by')
+
+    // Swagger documentation
+    api.use('/docs', swaggerUi.serve, swaggerUi.setup(documentation))
 
     // Get port from environment
     const port = EnvConfigs.PORT

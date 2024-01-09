@@ -6,7 +6,8 @@ import path from 'path'
 import * as documentation from './swagger.json'
 import { EnvConfigs } from './EnvConfigs'
 
-import initializeRoutes from './controller'
+import initializeUserRoutes from './controllers/users.controller'
+import initializeActivitiesRoutes from './controllers/activities.controller'
 
 export default function InitializeAPI() {
     // Initialize app
@@ -40,6 +41,7 @@ export default function InitializeAPI() {
         console.log('API running on port:', port)
     })
 
-    // Initialize controller
-    initializeRoutes(api)
+    // Initialize controllers
+    initializeUserRoutes(api)
+    initializeActivitiesRoutes(api)
 }

@@ -33,8 +33,15 @@ export const UserFHIRSchema = z.object({
                         .string()
                         .regex(
                             /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})?$/,
-                            'Invalid ISO 8601 timestamp format',
+                            'Invalid ISO 8601 timestamp format for start of period',
                         ),
+                    end: z
+                        .string()
+                        .regex(
+                            /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})?$/,
+                            'Invalid ISO 8601 timestamp format for end of period',
+                        )
+                        .optional(),
                 }),
             }),
         )
@@ -47,13 +54,20 @@ export const UserSchema = z.object({
     userId: z.string(),
     groupId: z.string(),
     instId: z.string(),
-    firstname: z.string().regex(/^[^0-9]*$/),
+    firstName: z.string().regex(/^[^0-9]*$/),
     arrivalDate: z
         .string()
         .regex(
             /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})?$/,
-            'Invalid ISO 8601 timestamp format',
+            'Invalid ISO 8601 timestamp format for arrivalDate',
         ),
+    departureDate: z
+        .string()
+        .regex(
+            /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})?$/,
+            'Invalid ISO 8601 timestamp format for departureDate',
+        )
+        .optional(),
 })
 
 export type User = z.infer<typeof UserSchema>

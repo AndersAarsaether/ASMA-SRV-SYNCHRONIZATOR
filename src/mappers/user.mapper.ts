@@ -7,7 +7,7 @@ export function userToFHIRUser(user: User): UserFHIR {
             { type: { text: 'userId' }, value: user.userId },
             { type: { text: 'groupId' }, value: user.groupId },
         ],
-        name: [{ text: user.firstname }],
+        name: [{ text: user.firstName }],
         contact: [
             {
                 organization: {
@@ -18,6 +18,7 @@ export function userToFHIRUser(user: User): UserFHIR {
                 },
                 period: {
                     start: user.arrivalDate,
+                    end: user.departureDate,
                 },
             },
         ],

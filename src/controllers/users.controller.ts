@@ -9,8 +9,8 @@ import { ErrorResponse, SuccessResponse } from '../types/responses'
 import { checkAuthHeader } from '../validators/headerValidators'
 import { chechPartnerParameter } from '../validators/paramValidators'
 
-export default function initialize(app: Express) {
-    app.post(
+export default function initialize(api: Express) {
+    api.post(
         '/users',
         validatePayload(UserSchema),
         checkAuthHeader,

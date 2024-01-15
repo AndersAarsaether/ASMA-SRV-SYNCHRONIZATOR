@@ -10,8 +10,8 @@ import { getZodTypeErrors } from '../utils/error.util'
 import { ErrorResponse, SuccessResponse } from '../types/responses'
 import { validateAPIKey } from '../validators/headerValidators'
 
-export default function initialize(app: Express) {
-    app.post(
+export default function initialize(api: Express) {
+    api.post(
         '/activities/ratings',
         validatePayload(RatingsFHIRSchema),
         validateAPIKey,
@@ -32,7 +32,7 @@ export default function initialize(app: Express) {
         },
     )
 
-    app.post(
+    api.post(
         '/activities/comments',
         validatePayload(CommentsFHIRSchema),
         validateAPIKey,

@@ -1,8 +1,8 @@
 import { Express, Request, Response } from 'express'
 import { ZodError } from 'zod'
 
-import handlePostComments from '../handlers/comments.post.handler'
-import handlePostRatings from '../handlers/ratings.post.handler'
+import handlePostComments from '../service/comments.post.handler'
+import handlePostRatings from '../service/ratings.post.handler'
 import validatePayload from '../validators/dataValidator'
 import { RatingsFHIRSchema, RatingsFHIR } from '../schemas/ratings'
 import { CommentsFHIRSchema, CommentsFHIR } from '../schemas/comments'

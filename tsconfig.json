@@ -40,7 +40,7 @@
         "src/*",
         "src/generated/*",
         "src/helpers/useCors.ts",
-        "src/handlers/communication-portal/declare-sha1.module.d.ts",
+        "src/service/communication-portal/declare-sha1.module.d.ts",
         "node_modules/asma-types/*"
     ]
 }

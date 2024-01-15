@@ -1,7 +1,7 @@
 import { Express, Request, Response } from 'express'
 import { ZodError } from 'zod'
 
-import handlePostUser from '../handlers/user.post.handler'
+import handlePostUser from '../service/user.post.handler'
 import validatePayload from '../validators/dataValidator'
 import { UserSchema, User } from '../schemas/user'
 import { getZodTypeErrors } from '../utils/error.util'

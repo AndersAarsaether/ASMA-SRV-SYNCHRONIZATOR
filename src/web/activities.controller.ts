@@ -12,7 +12,7 @@ import { validateAPIKey } from '../validators/headerValidators'
 
 export default function initialize(api: Express) {
     api.post(
-        '/activities/ratings',
+        '/Observation/ratings',
         validatePayload(RatingsFHIRSchema),
         validateAPIKey,
         (req: Request, res: Response) => {
@@ -33,7 +33,7 @@ export default function initialize(api: Express) {
     )
 
     api.post(
-        '/activities/comments',
+        '/Observation/comments',
         validatePayload(CommentsFHIRSchema),
         validateAPIKey,
         (req: Request, res: Response) => {

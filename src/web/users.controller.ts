@@ -11,7 +11,7 @@ import { chechPartnerParameter } from '../validators/paramValidators'
 
 export default function initialize(api: Express) {
     api.post(
-        '/users/:partner',
+        '/Patient/:partner',
         validatePayload(UserSchema),
         checkAuthHeader,
         chechPartnerParameter,

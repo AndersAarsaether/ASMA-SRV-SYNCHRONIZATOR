@@ -20,7 +20,6 @@ export default function initialize(api: Express) {
                 const user: User = req.body
                 // Already checked that partner parameter and auth token was provided
                 const partner = req.params.partner as string
-                console.log(partner)
                 const authToken = req.headers.authorization as string
                 const responseMsg = await handlePostUser(user, partner, authToken)
                 const response: SuccessResponse = { message: responseMsg }

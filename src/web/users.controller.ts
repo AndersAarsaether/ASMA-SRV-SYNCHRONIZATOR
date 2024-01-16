@@ -11,7 +11,7 @@ import { chechPartnerParameter } from '../validators/paramValidators'
 
 export default function initialize(api: Express) {
     api.post(
-        '/users',
+        '/users/:partner',
         validatePayload(UserSchema),
         checkAuthHeader,
         chechPartnerParameter,
@@ -19,7 +19,8 @@ export default function initialize(api: Express) {
             try {
                 const user: User = req.body
                 // Already checked that partner parameter and auth token was provided
-                const partner = req.query.partner as string
+                const partner = req.params.partner as string
+                console.log(partner)
                 const authToken = req.headers.authorization as string
                 const responseMsg = await handlePostUser(user, partner, authToken)
                 const response: SuccessResponse = { message: responseMsg }

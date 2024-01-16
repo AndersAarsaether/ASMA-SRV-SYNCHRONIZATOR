@@ -4,7 +4,7 @@ import { ErrorResponse } from '../types/responses'
 
 export function chechPartnerParameter(req: Request, res: Response, next: NextFunction): void {
     // Get partner parameter
-    const partnerParam = req.query.partner as string
+    const partnerParam = req.params.partner as string
     // Check if partner parameter was provided
     if (!partnerParam) {
         const response: ErrorResponse = { message: 'Bad Request', errors: ['Missing search parameter: partner'] }

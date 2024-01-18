@@ -4,7 +4,7 @@ import { getZodTypeErrors } from '../utils/error.util'
 import { ErrorResponse } from '../types/responses'
 
 // Middleware for data validation
-const dataValidator = (schema: z.ZodSchema) => {
+const validatePayload = (schema: z.ZodSchema) => {
     return (req: Request, res: Response, next: NextFunction) => {
         try {
             // Try to parse the body into schema-typed object
@@ -35,4 +35,4 @@ const dataValidator = (schema: z.ZodSchema) => {
     }
 }
 
-export default dataValidator
+export default validatePayload

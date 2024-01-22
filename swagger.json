@@ -1,13 +1,17 @@
 {
     "openapi": "3.0.1",
     "info": {
-        "title": "Swagger documentation for Carasent Open API",
-        "version": "1.0.0"
+        "title": "Swagger documentation for ASMA-SRV-SYNCRHONIZATOR"
     },
     "schemes": ["http"],
     "servers": [{ "url": "http://localhost:9100/" }],
+    "security": [
+        {
+            "ApiKeyAuth": []
+        }
+    ],
     "paths": {
-        "/activities/ratings": {
+        "/Observation/ratings": {
             "post": {
                 "tags": ["Storing feedback in Ad Voca"],
                 "summary": "Store patient-provided ratings on various activities",
@@ -55,7 +59,10 @@
                         "description": "Success",
                         "content": {
                             "application/json": {
-                                "schema": { "$ref": "#/components/schemas/success" }
+                                "schema": { "$ref": "#/components/schemas/success" },
+                                "example": {
+                                    "message": "Successfully stored the ratings"
+                                }
                             }
                         }
                     },
@@ -63,7 +70,16 @@
                         "description": "The request body does not conform to the schema",
                         "content": {
                             "application/json": {
-                                "schema": { "$ref": "#/components/schemas/error" }
+                                "schema": { "$ref": "#/components/schemas/error" },
+                                "example": {
+                                    "message": "The body did not conform to the schema",
+                                    "errors": [
+                                        "Invalid enum value. Expected 'before' | 'mid' | 'final' | 'during', received 'prior'",
+                                        "Invalid enum value. Expected 'adfectus', received 'adfectu'",
+                                        "Invalid ISO 8601 timestamp format",
+                                        "Found rating-value outside of the defined reference range"
+                                    ]
+                                }
                             }
                         }
                     },
@@ -71,7 +87,11 @@
                         "description": "Could not validate the API key",
                         "content": {
                             "application/json": {
-                                "schema": { "$ref": "#/components/schemas/error" }
+                                "schema": { "$ref": "#/components/schemas/error" },
+                                "example": {
+                                    "message": "Unauthorized",
+                                    "errors": ["API key is missing"]
+                                }
                             }
                         }
                     },
@@ -79,7 +99,11 @@
                         "description": "Incorrect API key",
                         "content": {
                             "application/json": {
-                                "schema": { "$ref": "#/components/schemas/error" }
+                                "schema": { "$ref": "#/components/schemas/error" },
+                                "example": {
+                                    "message": "Forbidden",
+                                    "errors": ["Invalid API key"]
+                                }
                             }
                         }
                     },
@@ -87,14 +111,18 @@
                         "description": "Internal server error",
                         "content": {
                             "application/json": {
-                                "schema": { "$ref": "#/components/schemas/error" }
+                                "schema": { "$ref": "#/components/schemas/error" },
+                                "example": {
+                                    "message": "Failed to store the ratings",
+                                    "errors": ["Some error description"]
+                                }
                             }
                         }
                     }
                 }
             }
         },
-        "/activities/comments": {
+        "/Observation/comments": {
             "post": {
                 "tags": ["Storing feedback in Ad Voca"],
                 "summary": "Store patient-provided comments on various activities",
@@ -136,7 +164,10 @@
                         "description": "Success",
                         "content": {
                             "application/json": {
-                                "schema": { "$ref": "#/components/schemas/success" }
+                                "schema": { "$ref": "#/components/schemas/success" },
+                                "example": {
+                                    "message": "Successfully stored the comments"
+                                }
                             }
                         }
                     },
@@ -144,7 +175,15 @@
                         "description": "The request body does not conform to the schema",
                         "content": {
                             "application/json": {
-                                "schema": { "$ref": "#/components/schemas/error" }
+                                "schema": { "$ref": "#/components/schemas/error" },
+                                "example": {
+                                    "message": "The body did not conform to the schema",
+                                    "errors": [
+                                        "Invalid enum value. Expected 'before' | 'mid' | 'final' | 'during', received 'prior'",
+                                        "Invalid enum value. Expected 'adfectus', received 'adfectu'",
+                                        "Invalid ISO 8601 timestamp format"
+                                    ]
+                                }
                             }
                         }
                     },
@@ -152,7 +191,11 @@
                         "description": "Could not validate the API key",
                         "content": {
                             "application/json": {
-                                "schema": { "$ref": "#/components/schemas/error" }
+                                "schema": { "$ref": "#/components/schemas/error" },
+                                "example": {
+                                    "message": "Unauthorized",
+                                    "errors": ["API key is missing"]
+                                }
                             }
                         }
                     },
@@ -160,7 +203,11 @@
                         "description": "Incorrect API key",
                         "content": {
                             "application/json": {
-                                "schema": { "$ref": "#/components/schemas/error" }
+                                "schema": { "$ref": "#/components/schemas/error" },
+                                "example": {
+                                    "message": "Forbidden",
+                                    "errors": ["Invalid API key"]
+                                }
                             }
                         }
                     },
@@ -168,7 +215,11 @@
                         "description": "Internal server error",
                         "content": {
                             "application/json": {
-                                "schema": { "$ref": "#/components/schemas/error" }
+                                "schema": { "$ref": "#/components/schemas/error" },
+                                "example": {
+                                    "message": "Failed to store the comments",
+                                    "errors": ["Some error description"]
+                                }
                             }
                         }
                     }
@@ -177,6 +228,13 @@
         }
     },
     "components": {
+        "securitySchemes": {
+            "ApiKeyAuth": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "x-api-key"
+            }
+        },
         "schemas": {
             "ratings": {
                 "type": "object",

@@ -6,7 +6,7 @@ import ErrorWithStatus from '../types/errorWithCode'
 import { createErrorWithCode, isErrorWithCode } from '../utils/error.util'
 import { shouldRetry } from '../utils/retry.util'
 
-export async function postUser(user: UserFHIR, credentials: Credentials, authToken: string): Promise<string> {
+export async function postUser(user: UserFHIR, credentials: Credentials, partnerAuthToken: string): Promise<string> {
     const body = JSON.stringify(user)
     const resourceUrl = credentials.resourceUrl
     const apiKey = credentials.apiKey
@@ -20,7 +20,7 @@ export async function postUser(user: UserFHIR, credentials: Credentials, authTok
 
         operation.attempt(async (currentAttempt) => {
             try {
-                const responseMsg = await tryToSendUser(body, resourceUrl, apiKey, authToken)
+                const responseMsg = await tryToSendUser(body, resourceUrl, apiKey, partnerAuthToken)
                 resolve(responseMsg)
             } catch (error) {
                 if (isErrorWithCode(error)) {

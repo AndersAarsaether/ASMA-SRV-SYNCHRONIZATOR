@@ -84,25 +84,13 @@
                         }
                     },
                     "401": {
-                        "description": "Could not validate the API key",
+                        "description": "Invalid API key",
                         "content": {
                             "application/json": {
                                 "schema": { "$ref": "#/components/schemas/error" },
                                 "example": {
                                     "message": "Unauthorized",
-                                    "errors": ["API key is missing"]
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Incorrect API key",
-                        "content": {
-                            "application/json": {
-                                "schema": { "$ref": "#/components/schemas/error" },
-                                "example": {
-                                    "message": "Forbidden",
-                                    "errors": ["Invalid API key"]
+                                    "errors": ["Authentication failed"]
                                 }
                             }
                         }
@@ -188,25 +176,13 @@
                         }
                     },
                     "401": {
-                        "description": "Could not validate the API key",
+                        "description": "Invalid API key",
                         "content": {
                             "application/json": {
                                 "schema": { "$ref": "#/components/schemas/error" },
                                 "example": {
                                     "message": "Unauthorized",
-                                    "errors": ["API key is missing"]
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Incorrect API key",
-                        "content": {
-                            "application/json": {
-                                "schema": { "$ref": "#/components/schemas/error" },
-                                "example": {
-                                    "message": "Forbidden",
-                                    "errors": ["Invalid API key"]
+                                    "errors": ["Authentication failed"]
                                 }
                             }
                         }

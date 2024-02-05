@@ -4,6 +4,7 @@ dotenv.config()
 
 export const EnvConfigs = {
     PORT: process.env.PORT ?? '9100',
+    JWT_SECRET: process.env.JWT_SECRET ?? '',
     API_KEY: process.env.API_KEY ?? '',
     API_URL: process.env.API_URL ?? '',
     API_KEY_ADFECTUS: process.env.API_KEY_ADFECTUS ?? '',

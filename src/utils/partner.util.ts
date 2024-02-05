@@ -1,6 +1,6 @@
 import Partner from '../enums/partner'
 import { EnvConfigs } from '../EnvConfigs'
-import Credentials from '../types/credentials'
+import type Credentials from '../types/credentials'
 
 export function isValidPartnerString(partnerString: string): boolean {
     return Object.values(Partner).includes(partnerString as Partner)
@@ -9,12 +9,11 @@ export function isValidPartnerString(partnerString: string): boolean {
 export function getPartnerFromString(partnerString: string): Partner {
     const partnerLowerCase = partnerString.toLowerCase()
 
-    switch (partnerLowerCase) {
-        case 'adfectus':
-            return Partner.Adfectus
-        default:
-            throw new Error('Invalid partner string')
+    if (Object.values(Partner).includes(partnerLowerCase as Partner)) {
+        return partnerLowerCase as Partner
     }
+
+    throw new Error('Invalid Partner string')
 }
 
 export function getCredentialsFromPartner(partner: Partner): Credentials {

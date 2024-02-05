@@ -1,4 +1,5 @@
-import { User, UserFHIR, UserFHIRSchema } from '../schemas/user'
+import type { User, UserFHIR } from '../schemas/user'
+import { UserFHIRSchema } from '../schemas/user'
 
 export function userToFHIRUser(user: User): UserFHIR {
     const object = {

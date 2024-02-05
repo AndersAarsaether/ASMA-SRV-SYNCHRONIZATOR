@@ -1,8 +1,9 @@
 import retry from 'retry'
 import fetch from 'node-fetch'
-import { UserFHIR } from '../schemas/user'
-import Credentials from '../types/credentials'
-import ErrorWithStatus from '../types/errorWithCode'
+
+import type { UserFHIR } from '../schemas/user'
+import type Credentials from '../types/credentials'
+import type ErrorWithStatus from '../types/errorWithCode'
 import { createErrorWithCode, isErrorWithCode } from '../utils/error.util'
 import { shouldRetry } from '../utils/retry.util'
 
@@ -13,9 +14,10 @@ export async function postUser(user: UserFHIR, credentials: Credentials, partner
 
     return new Promise((resolve, reject) => {
         const operation = retry.operation({
-            retries: 2, // Customize the number of retries here
-            factor: 2, // Exponential factor for increasing wait times
-            minTimeout: 5 * 1000, // Time before first retry, in milliseconds
+            retries: 2, // The number of retries
+            factor: 2, // Doubling the wait time for every retry
+            minTimeout: 4 * 1000, // Time before first retry, in milliseconds
+            randomize: true, // Adding some randomness to avoid server congestion
         })
 
         operation.attempt(async (currentAttempt) => {

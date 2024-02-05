@@ -1,39 +1,18 @@
-import { Express, Request, Response } from 'express'
-import { ZodError } from 'zod'
+import type { Express, Request, Response } from 'express'
 
-import handlePostUser from '../service/user.post.handler'
+import { UserSchema } from '../schemas/user'
 import validatePayload from '../validators/dataValidator'
-import { UserSchema, User } from '../schemas/user'
-import { getZodTypeErrors } from '../utils/error.util'
-import { ErrorResponse, SuccessResponse } from '../types/responses'
 import { checkAuthorizationHeader, checkPartnerAuthorizationHeader } from '../validators/headerValidators'
 import { chechPartnerParameter } from '../validators/paramValidators'
+import handlePostUser from '../service/user.post.handler'
 
-export default function initialize(api: Express) {
+export default function registerUserRoutes(api: Express) {
     api.post(
         '/Patient/:partner',
         validatePayload(UserSchema),
         checkAuthorizationHeader,
         checkPartnerAuthorizationHeader,
         chechPartnerParameter,
-        async (req: Request, res: Response) => {
-            try {
-                const user: User = req.body
-                // Already checked that partner parameter and partner auth token was provided
-                const partner = req.params.partner as string
-                const partnerAuthToken = req.header('Partner-Authorization')!.split(' ')[1] as string
-                const responseMsg = await handlePostUser(user, partner, partnerAuthToken)
-                const response: SuccessResponse = { message: responseMsg }
-                res.status(200).json(response)
-            } catch (error) {
-                const description = error?.message as string
-                const recipient = req.query.partner as string
-                const response: ErrorResponse = {
-                    message: `Failed to post the user to ${recipient}`,
-                    errors: error instanceof ZodError ? getZodTypeErrors(error) : [description],
-                }
-                res.status(500).json(response)
-            }
-        },
+        async (req: Request, res: Response) => await handlePostUser(req, res),
     )
 }

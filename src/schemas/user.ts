@@ -50,24 +50,28 @@ export const UserFHIRSchema = z.object({
 
 export type UserFHIR = z.infer<typeof UserFHIRSchema>
 
-export const UserSchema = z.object({
-    userId: z.string(),
-    groupId: z.string(),
-    instId: z.string(),
-    firstName: z.string().regex(/^[^0-9]*$/),
-    arrivalDate: z
-        .string()
-        .regex(
-            /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})?$/,
-            'Invalid ISO 8601 timestamp format for arrivalDate',
-        ),
-    departureDate: z
-        .string()
-        .regex(
-            /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})?$/,
-            'Invalid ISO 8601 timestamp format for departureDate',
-        )
-        .optional(),
-})
+export const UserSchema = z
+    .object({
+        userId: z.string(),
+        groupId: z.string(),
+        instId: z.string(),
+        firstName: z.string().regex(/^[^0-9]*$/),
+        arrivalDate: z
+            .string()
+            .regex(
+                /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})?$/,
+                'Invalid ISO 8601 timestamp format for arrivalDate',
+            ),
+        departureDate: z
+            .string()
+            .regex(
+                /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})?$/,
+                'Invalid ISO 8601 timestamp format for departureDate',
+            )
+            .optional(),
+    })
+    .refine((user) => !user.departureDate || new Date(user.arrivalDate) < new Date(user.departureDate), {
+        message: 'The departureDate must be after the arrivalDate',
+    })
 
 export type User = z.infer<typeof UserSchema>

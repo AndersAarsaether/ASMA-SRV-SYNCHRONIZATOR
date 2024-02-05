@@ -1,5 +1,5 @@
-import { Ratings } from '../schemas/ratings'
-import { Comments } from '../schemas/comments'
+import type { Ratings } from '../schemas/ratings'
+import type { Comments } from '../schemas/comments'
 
 export function storeFeedbackRatings(ratings: Ratings): void {
     console.log(`Ratings stored: ${JSON.stringify(ratings)}`)

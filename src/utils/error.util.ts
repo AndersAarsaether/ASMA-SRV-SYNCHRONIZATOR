@@ -1,5 +1,6 @@
-import ErrorWithCode from '../types/errorWithCode'
 import { ZodError } from 'zod'
+
+import type ErrorWithCode from '../types/errorWithCode'
 
 // Function to create an error object that conforms to the ErrorWithCode interface
 export function createErrorWithCode(statusCode: number): ErrorWithCode {

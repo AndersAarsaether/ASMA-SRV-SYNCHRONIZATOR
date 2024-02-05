@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken'
-import { Request, Response, NextFunction } from 'express'
+import type { Request, Response, NextFunction } from 'express'
+
 import { EnvConfigs } from '../EnvConfigs'
-import { ErrorResponse } from '../types/responses'
+import type { ErrorResponse } from '../types/responses'
 
 export function validateAPIKey(req: Request, res: Response, next: NextFunction): void {
     // Get API key from header

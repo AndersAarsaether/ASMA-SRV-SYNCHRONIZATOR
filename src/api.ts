@@ -1,38 +1,13 @@
-import express, { json } from 'express'
-import helmet from 'helmet'
+import type { Express } from 'express'
 import swaggerUi from 'swagger-ui-express'
-import path from 'path'
 
 import * as documentation from '../swagger.json'
+
 import { EnvConfigs } from './EnvConfigs'
+import registerUserRoutes from './web/users.controller'
+import registerFeedbackRoutes from './web/feedback.controller'
 
-import initializeUserRoutes from './web/users.controller'
-import initializeActivitiesRoutes from './web/activities.controller'
-
-export default function InitializeAPI() {
-    // Initialize app
-    const api = express()
-
-    // Maximum size of JSON body
-    api.use(json({ limit: '10mb' }))
-
-    // General web security
-    api.use(helmet())
-
-    // Serve static files from 'public' directory
-    api.use(express.static('public'))
-
-    // Route for serving the HTML file at root
-    api.get('/', (_, res) => {
-        res.sendFile(path.join(__dirname, 'public', 'index.html'))
-    })
-
-    // Disable etag and x-powered-by headers
-    api.disable('etag').disable('x-powered-by')
-
-    // Swagger documentation
-    api.use('/docs', swaggerUi.serve, swaggerUi.setup(documentation))
-
+export default function configureRoutes(api: Express) {
     // Get port from environment
     const port = EnvConfigs.PORT
 
@@ -41,7 +16,11 @@ export default function InitializeAPI() {
         console.log('API running on port:', port)
     })
 
-    // Initialize controllers
-    initializeUserRoutes(api)
-    initializeActivitiesRoutes(api)
+    // Swagger documentation
+    api.use('/swagger', swaggerUi.serve, swaggerUi.setup(documentation))
+
+    // Add the endpoints for users
+    registerUserRoutes(api)
+    // Add the endpoints for feedback
+    registerFeedbackRoutes(api)
 }

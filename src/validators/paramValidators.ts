@@ -1,6 +1,7 @@
-import { Request, Response, NextFunction } from 'express'
+import type { Request, Response, NextFunction } from 'express'
+
 import { isValidPartnerString } from '../utils/partner.util'
-import { ErrorResponse } from '../types/responses'
+import type { ErrorResponse } from '../types/responses'
 
 export function chechPartnerParameter(req: Request, res: Response, next: NextFunction): void {
     // Get partner parameter

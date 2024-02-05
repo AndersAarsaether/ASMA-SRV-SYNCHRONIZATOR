@@ -1,7 +1,8 @@
-import { NextFunction, Request, Response } from 'express'
+import type { NextFunction, Request, Response } from 'express'
 import { z, ZodError } from 'zod'
+
 import { getZodTypeErrors } from '../utils/error.util'
-import { ErrorResponse } from '../types/responses'
+import type { ErrorResponse } from '../types/responses'
 
 // Middleware for data validation
 const validatePayload = (schema: z.ZodSchema) => {
